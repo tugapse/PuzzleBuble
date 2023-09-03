@@ -14,7 +14,7 @@ public class PlayerControler : MonoBehaviour
     public Transform mira;
     float currentRotation = 0;
 
-    public BallSpawnner spawnner;
+    public BallSpawner spawnner;
     public bool canShoot = true;
 
 

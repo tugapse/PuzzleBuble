@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallSpawnner : MonoBehaviour
+public class BallSpawner : MonoBehaviour
 {
 
     public GameObject[] Balls;
