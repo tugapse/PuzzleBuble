@@ -50,7 +50,7 @@ public class PlayerControler : MonoBehaviour
 
     void CheckHandleRotation()
     {
-        float rotation = Input.GetAxis("Horizontal");
+        float rotation = Input.GetAxisRaw("Horizontal");
         this.currentRotation += rotation * this.rotationSpeed;
         this.currentRotation = this.clampRotation(this.currentRotation);
         this.transform.rotation = Quaternion.Euler(0, 0, -this.currentRotation);

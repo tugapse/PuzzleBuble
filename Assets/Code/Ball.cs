@@ -12,7 +12,8 @@ public class Ball : MonoBehaviour
     public List<Ball> conections = new List<Ball>();
     public List<Ball> sameColorConections = new List<Ball>();
     public bool snapped = false;
-
+    private bool drawcSameColorConnections;
+    private bool drawConnections;
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -21,11 +22,22 @@ public class Ball : MonoBehaviour
             if (!this.PrepareBigidBody()) return;
             GridCell cell = this.Snap();
             if (cell == null) return;
-            cell.isTopRow = other.gameObject.tag == "Top";
+            this.trigger.enabled = true;
+
             GameGrid.current.RemoveConnected(cell);
 
         }
     }
+
+    private bool PrepareBigidBody()
+    {
+        Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
+
+        if (rb.bodyType == RigidbodyType2D.Static) return false;
+        rb.bodyType = RigidbodyType2D.Static;
+        return true;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
@@ -52,23 +64,27 @@ public class Ball : MonoBehaviour
         {
             cell.ball = this;
             this.transform.position = cell.gridPosition;
+            this.snapped = true;
+            this.gameObject.transform.parent = GameGrid.current.transform;
             PlayerControler.current.canShoot = true;
         }
-        this.snapped = true;
         return cell;
     }
-    private bool PrepareBigidBody()
-    {
-        Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
 
-        if (rb.bodyType == RigidbodyType2D.Static) return false;
-        rb.bodyType = RigidbodyType2D.Static;
-        this.trigger.enabled = true;
-        return true;
-    }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
+        // if (drawcSameColorConnections)
+        foreach (var ball in this.sameColorConections)
+        {
+            if (ball == null)
+            {
+                continue;
+            }
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(ball.transform.position, this.transform.position);
+        }
+        // if (drawConnections)
         foreach (var ball in this.conections)
         {
             if (ball == null)

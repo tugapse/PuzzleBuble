@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Unity.Collections;
 using Unity.VisualScripting;
@@ -17,7 +18,10 @@ struct VisitedCell
 public class GameGrid : MonoBehaviour
 {
     public static GameGrid current { get; private set; }
-    public float startDelay = 2;
+
+    public float gameStartDelay = 2;
+    public int phisycsFrameDelay = 5;
+
     public bool GameStarted;
 
     public Vector3 Size = Vector3.one * 10;
@@ -27,7 +31,6 @@ public class GameGrid : MonoBehaviour
     public Transform spawnerTopRowPoint;
     public Transform gridContainer;
     public BallSpawner ballspawner;
-    public int maxFrameDelay = 20;
     int frameDelay = 300;
 
     [Header("Debug")]
@@ -36,44 +39,63 @@ public class GameGrid : MonoBehaviour
     public Color gridColor;
     public Color cellColor = Color.black;
     private bool needFloodFiil;
+    private bool needClean;
 
     void Start()
     {
         GameGrid.current = this;
-        frameDelay = this.maxFrameDelay;
+        frameDelay = this.phisycsFrameDelay;
         this.ComputeGrid(true);
     }
 
 
     void FixedUpdate()
     {
-        startDelay -= Time.fixedDeltaTime;
-        if (startDelay < 0)
+
+        if (!CanUpdate()) return;
+        this.FloodCheck();
+        this.DestroyOldCells();
+
+
+    }
+    bool CanUpdate()
+    {
+        gameStartDelay -= Time.fixedDeltaTime;
+        if (gameStartDelay < 0)
         {
             this.GameStarted = true;
-            startDelay = 0;
+            gameStartDelay = 0;
         }
-        if (frameDelay <= 0)
+        if (!GameStarted) return false;
+
+        if (frameDelay >= 0)
         {
             frameDelay--;
-            return;
+            return false;
         }
-        frameDelay = maxFrameDelay;
-
-        this.DestroyOldCells();
-        this.FloodCheck();
-
-
+        frameDelay = phisycsFrameDelay;
+        return true;
     }
 
     private void FloodCheck()
     {
 
         if (!this.needFloodFiil) return;
-
         var visitedFlood = new List<Vector3>();
         this.ClearGridState();
         this.FloodFill(this.GetTopRowCells(), visitedFlood);
+    }
+
+    private void ClearGridState()
+    {
+
+        foreach (var cell in this.gameCells)
+        {
+            if (cell.isFull)
+            {
+                cell.isDirty = true;
+            }
+        }
     }
 
     private List<GridCell> GetConnectedCells(GridCell currentCell, List<int> visited = null, List<GridCell> connetedCells = null)
@@ -89,7 +111,7 @@ public class GameGrid : MonoBehaviour
             if (!visited.Contains(i) && currentCell.isRange(otherCell.gridPosition, 1.1f))
             {
                 visited.Add(i);
-                if (otherCell.ball && otherCell.ball.color == currentCell.ball.color)
+                if (otherCell.isFull && otherCell.ball.color == currentCell.ball.color)
                 {
                     connetedCells.Add(otherCell);
                     this.GetConnectedCells(otherCell, visited, connetedCells);
@@ -104,31 +126,31 @@ public class GameGrid : MonoBehaviour
         return this.gameCells.Where(cell => cell.isTopRow).ToList<GridCell>();
     }
 
-    public void FloodFill(List<GridCell> connected, List<Vector3> visited)
+    void FloodFill(List<GridCell> connected, List<Vector3> visited)
     {
         if (visited == null) visited = new List<Vector3>();
         foreach (var cell in connected)
         {
-            if (visited.Contains(cell.gridPosition) || cell.ball == null) continue;
-            cell.ball.toDestroy = false;
+            if (visited.Contains(cell.gridPosition) || cell.isEmpty || !cell.isDirty) continue;
+            cell.isDirty = false;
             visited.Add(cell.gridPosition);
             this.FloodFill(cell.connectedCells, visited);
         }
         this.needFloodFiil = false;
+        this.needClean = true;
     }
     private void DestroyOldCells()
     {
-        bool deleted = false;
+        if (!needClean) return;
         foreach (var cell in this.gameCells)
         {
-            if (cell.ball == null) continue;
-            if (cell.ball.toDestroy)
+            if (cell.isEmpty) continue;
+            if (cell.isDirty)
             {
-                deleted = true;
                 cell.Clear();
             }
         }
-        this.needFloodFiil = deleted;
+        this.needClean = false;
     }
 
     private void ComputeGrid(bool instantiateBall)
@@ -169,30 +191,31 @@ public class GameGrid : MonoBehaviour
         float minX = spawnerPoint.position.x - spawnerPoint.localScale.x / 2;
         float minY = spawnerPoint.position.y - spawnerPoint.localScale.y / 2;
 
-        float tminX = spawnerTopRowPoint.position.x - spawnerTopRowPoint.localScale.x / 2;
-        float tminY = spawnerTopRowPoint.position.y - spawnerTopRowPoint.localScale.y / 2;
 
-        float gminX = gridContainer.position.x - gridContainer.localScale.x / 2;
-        float gminY = gridContainer.position.y - gridContainer.localScale.y / 2;
+        float gridMinX = gridContainer.position.x - gridContainer.localScale.x / 2;
+        float gridMinY = gridContainer.position.y - gridContainer.localScale.y / 2;
 
-        Rect rect = new Rect(minX, minY, spawnerPoint.localScale.x, spawnerPoint.localScale.y);
-        Rect topRowRect = new Rect(tminX, tminY, spawnerTopRowPoint.localScale.x, spawnerTopRowPoint.localScale.y);
-        Rect gridRect = new Rect(gminX, gminY, gridContainer.localScale.x, gridContainer.localScale.y);
+        Rect spanwRect = new Rect(minX, minY, spawnerPoint.localScale.x, spawnerPoint.localScale.y);
+        Rect gridRect = new Rect(gridMinX, gridMinY, gridContainer.localScale.x, gridContainer.localScale.y);
 
         if (gridRect.Contains(cell.gridPosition)) this.gameCells.Add(cell);
+        if (spanwRect.Contains(cell.gridPosition)) InstantiateBall(cell);
 
-        if (rect.Contains(cell.gridPosition))
-        {
+    }
 
-            GameObject instance = this.ballspawner.InstanciateBall(cell.gridPosition);
-            cell.ball = instance.GetComponent<Ball>();
-            cell.ball.transform.parent = this.transform;
-            cell.ball.trigger.enabled = true;
-            cell.isTopRow = topRowRect.Contains(cell.gridPosition);
-            cell.Debug();
-            cell.ball.Snap();
+    private void InstantiateBall(GridCell cell)
+    {
+        float tminX = spawnerTopRowPoint.position.x - spawnerTopRowPoint.localScale.x / 2;
+        float tminY = spawnerTopRowPoint.position.y - spawnerTopRowPoint.localScale.y / 2;
+        Rect topRowRect = new Rect(tminX, tminY, spawnerTopRowPoint.localScale.x, spawnerTopRowPoint.localScale.y);
 
-        }
+        GameObject instance = this.ballspawner.InstanciateBall(cell.gridPosition);
+        cell.ball = instance.GetComponent<Ball>();
+        cell.ball.transform.parent = this.transform;
+        cell.ball.trigger.enabled = true;
+        cell.isTopRow = topRowRect.Contains(cell.gridPosition);
+        if (cell.isTopRow) cell.Debug();
+        cell.ball.Snap();
     }
 
     public GridCell GetGridPosition(Vector3 worldPosition)
@@ -227,17 +250,7 @@ public class GameGrid : MonoBehaviour
         this.needFloodFiil = true;
     }
 
-    private void ClearGridState()
-    {
 
-        foreach (var cell in this.gameCells)
-        {
-            if (cell.ball)
-            {
-                cell.ball.toDestroy = true;
-            }
-        }
-    }
     private void OnDrawGizmos()
     {
         if (drawGrid) DrawGrid();

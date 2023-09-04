@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pointer : MonoBehaviour
 {
 
-public    Transform target;
+    public Transform target;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public    Transform target;
     void Update()
     {
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 10);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.up, 100);
         if (hit.collider != null)
         {
             target.transform.position = hit.point;

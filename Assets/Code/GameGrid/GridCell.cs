@@ -7,16 +7,18 @@ using UnityEngine;
 
 public class GridCell
 {
-    public bool isEmpty { get { return ball != null; } }
+    public bool isEmpty { get { return ball == null; } }
+    public bool isFull { get { return ball != null; } }
     public bool isTopRow { get; set; }
     public Vector3 gridPosition;
     public Ball ball;
+    public bool isDirty;
     public List<GridCell> connectedCells
     {
         get
         {
             List<GridCell> result = new List<GridCell>();
-            if (this.ball == null) return result;
+            if (this.isEmpty) return result;
             foreach (Ball ball in this.ball.conections)
             {
                 var cell = GameGrid.current.GetGridPosition(ball.transform.position);
@@ -26,7 +28,6 @@ public class GridCell
         }
     }
 
-    public bool ToCheck { get; set; }
 
     public bool isRange(Vector3 worldPosition, float threashHold = 0.5f)
     {
@@ -39,6 +40,8 @@ public class GridCell
         this.ClearConnections();
         GameObject.Destroy(ball.gameObject);
         this.ball = null;
+        this.isTopRow = false;
+        this.isDirty = false;
     }
 
     private void ClearConnections()
@@ -57,7 +60,7 @@ public class GridCell
 
     public void Debug()
     {
-        if (this.isTopRow)
+        if (this.ball != null)
         {
             var sp = this.ball.GetComponent<SpriteRenderer>();
             sp.color -= new Color(0, 0, 0, 0.5f);
