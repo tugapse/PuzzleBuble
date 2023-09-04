@@ -54,7 +54,7 @@ public class GameGrid : MonoBehaviour
 
         if (!CanUpdate()) return;
         this.FloodCheck();
-        this.DestroyOldCells();
+        this.DestroyAfterFlood();
 
 
     }
@@ -139,16 +139,13 @@ public class GameGrid : MonoBehaviour
         this.needFloodFiil = false;
         this.needClean = true;
     }
-    private void DestroyOldCells()
+    private void DestroyAfterFlood()
     {
         if (!needClean) return;
         foreach (var cell in this.gameCells)
         {
             if (cell.isEmpty) continue;
-            if (cell.isDirty)
-            {
-                cell.Clear();
-            }
+            if (cell.isDirty) cell.Fall();
         }
         this.needClean = false;
     }
@@ -214,7 +211,6 @@ public class GameGrid : MonoBehaviour
         cell.ball.transform.parent = this.transform;
         cell.ball.trigger.enabled = true;
         cell.isTopRow = topRowRect.Contains(cell.gridPosition);
-        if (cell.isTopRow) cell.Debug();
         cell.ball.Snap();
     }
 
@@ -244,7 +240,7 @@ public class GameGrid : MonoBehaviour
         {
             foreach (var cell in connectedcells)
             {
-                cell.Clear();
+                cell.Fall(currentCell.gridPosition, 2);
             }
         }
         this.needFloodFiil = true;

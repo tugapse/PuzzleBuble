@@ -23,7 +23,6 @@ public class Ball : MonoBehaviour
             GridCell cell = this.Snap();
             if (cell == null) return;
             this.trigger.enabled = true;
-
             GameGrid.current.RemoveConnected(cell);
 
         }
@@ -32,7 +31,6 @@ public class Ball : MonoBehaviour
     private bool PrepareBigidBody()
     {
         Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
-
         if (rb.bodyType == RigidbodyType2D.Static) return false;
         rb.bodyType = RigidbodyType2D.Static;
         return true;
@@ -42,8 +40,6 @@ public class Ball : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {
-
-
             var ball = other.gameObject.GetComponent<Ball>();
             if (ball == null) return;
             if (!this.conections.Contains(ball))
