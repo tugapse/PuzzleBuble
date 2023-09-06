@@ -1,41 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
 
-    public static PlayerControler current { get; private set; }
+    public GameGrid gamegrid;
     public float rotationSpeed = 0.2f;
+    public AnimationCurve speedCurve;
     public float maxRotation = 30f;
     public Transform arrow;
     public Transform mira;
     float currentRotation = 0;
 
     public BallSpawner spawnner;
-    public bool canShoot = true;
+    public bool canShoot = false;
 
-
-    private bool shoot = false;
 
 
     void Start()
     {
-        PlayerControler.current = this;
         this.spawnner.Spawn();
     }
 
     void Update()
     {
+        if (!gamegrid.gameStarted) return;
         this.CheckHandleRotation();
         this.handleJump();
     }
-    void FixedUpdate()
-    {
-    }
-
     void handleJump()
     {
         if (Input.GetButtonDown("Jump") && canShoot)
@@ -51,7 +43,7 @@ public class PlayerControler : MonoBehaviour
     void CheckHandleRotation()
     {
         float rotation = Input.GetAxisRaw("Horizontal");
-        this.currentRotation += rotation * this.rotationSpeed;
+        this.currentRotation += rotation * this.rotationSpeed * Time.deltaTime;
         this.currentRotation = this.clampRotation(this.currentRotation);
         this.transform.rotation = Quaternion.Euler(0, 0, -this.currentRotation);
     }

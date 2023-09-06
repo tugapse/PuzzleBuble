@@ -11,23 +11,31 @@ public class Ball : MonoBehaviour
     public CircleCollider2D trigger;
     public List<Ball> conections = new List<Ball>();
     public List<Ball> sameColorConections = new List<Ball>();
-    public bool snapped = false;
-    private bool drawcSameColorConnections;
-    private bool drawConnections;
+    public GameGrid gameGrid;
+
+
 
     void OnCollisionEnter2D(Collision2D other)
     {
+
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {
             if (!this.PrepareBigidBody()) return;
             GridCell cell = this.Snap();
             if (cell == null) return;
             this.trigger.enabled = true;
-            GameGrid.current.RemoveConnected(cell);
+            this.CheckIsTopRow(cell, other);
+            gameGrid.RemoveConnected(cell);
 
         }
     }
-
+    private void CheckIsTopRow(GridCell cell, Collision2D other)
+    {
+        if (gameGrid.gameStarted)
+        {
+            cell.isTopRow = other.gameObject.tag == "Top";
+        }
+    }
     private bool PrepareBigidBody()
     {
         Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
@@ -55,14 +63,12 @@ public class Ball : MonoBehaviour
     {
 
 
-        GridCell cell = GameGrid.current.GetGridPosition(this.transform.position);
+        GridCell cell = gameGrid.GetGridPosition(this.transform.position);
         if (cell != null)
         {
             cell.ball = this;
             this.transform.position = cell.gridPosition;
-            this.snapped = true;
-            this.gameObject.transform.parent = GameGrid.current.transform;
-            PlayerControler.current.canShoot = true;
+            this.gameObject.transform.parent = gameGrid.transform;
         }
         return cell;
     }

@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &864687955978572690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3176569878389021173}
+  - component: {fileID: 6816894888431495330}
+  m_Layer: 0
+  m_Name: nextBallPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3176569878389021173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864687955978572690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.64, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 162789992608270141}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6816894888431495330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864687955978572690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39157fcf2d3747b42b60715a43eb7fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  active: 0
+  toDestroy: 0
+  color: -1
+  trigger: {fileID: 0}
+  conections: []
+  sameColorConections: []
+  gameGrid: {fileID: 0}
+--- !u!1 &6348751332055689998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 162789992608270141}
+  - component: {fileID: 2433105579335512341}
+  m_Layer: 0
+  m_Name: Ballspanner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &162789992608270141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6348751332055689998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6, y: -20.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3176569878389021173}
+  m_Father: {fileID: 0}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2433105579335512341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6348751332055689998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6583fbff800f37d4db5383071271c9d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameGrid: {fileID: 0}
+  Balls:
+  - {fileID: 9028555844156648720, guid: 542963a405265f449a32109b08b4a97e, type: 3}
+  - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
+  - {fileID: 9028555844156648720, guid: 20fae95e2aec0a54ea509f83fd600902, type: 3}
+  - {fileID: 9028555844156648720, guid: 87161c1dfd81ac84b84c98b2c41de74f, type: 3}
+  - {fileID: 9028555844156648720, guid: 4985951c101914b49bb44fbb2edc56f6, type: 3}
+  shootForce: 15
+  nextBallTranform: {fileID: 3176569878389021173}
+  animations: {fileID: 0}
+  playerControler: {fileID: 0}

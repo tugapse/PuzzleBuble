@@ -17,12 +17,12 @@ struct VisitedCell
 }
 public class GameGrid : MonoBehaviour
 {
-    public static GameGrid current { get; private set; }
+
 
     public float gameStartDelay = 2;
     public int phisycsFrameDelay = 5;
 
-    public bool GameStarted;
+    public bool gameStarted;
 
     public Vector3 Size = Vector3.one * 10;
     private float cellSize = 1f;
@@ -31,7 +31,10 @@ public class GameGrid : MonoBehaviour
     public Transform spawnerTopRowPoint;
     public Transform gridContainer;
     public BallSpawner ballspawner;
+
+
     int frameDelay = 300;
+
 
     [Header("Debug")]
     public bool drawGrid = true;
@@ -43,8 +46,6 @@ public class GameGrid : MonoBehaviour
 
     void Start()
     {
-        GameGrid.current = this;
-        frameDelay = this.phisycsFrameDelay;
         this.ComputeGrid(true);
     }
 
@@ -63,10 +64,10 @@ public class GameGrid : MonoBehaviour
         gameStartDelay -= Time.fixedDeltaTime;
         if (gameStartDelay < 0)
         {
-            this.GameStarted = true;
+            this.gameStarted = true;
             gameStartDelay = 0;
         }
-        if (!GameStarted) return false;
+        if (!gameStarted) return false;
 
         if (frameDelay >= 0)
         {
@@ -145,7 +146,7 @@ public class GameGrid : MonoBehaviour
         foreach (var cell in this.gameCells)
         {
             if (cell.isEmpty) continue;
-            if (cell.isDirty) cell.Fall();
+            if (cell.isDirty) cell.Fall(4);
         }
         this.needClean = false;
     }
@@ -171,7 +172,7 @@ public class GameGrid : MonoBehaviour
                     newPosition = this.transform.position + new Vector3(x + 0.5f, 1 * -(y - halfy - 0.5f - increment), 0) - Vector3.right * halfx;
 
                 }
-                GridCell cell = new GridCell() { gridPosition = newPosition };
+                GridCell cell = new GridCell() { gridPosition = newPosition, gameGrid = this };
 
 
                 if (instantiateBall)
@@ -208,6 +209,7 @@ public class GameGrid : MonoBehaviour
 
         GameObject instance = this.ballspawner.InstanciateBall(cell.gridPosition);
         cell.ball = instance.GetComponent<Ball>();
+        cell.ball.gameGrid = this;
         cell.ball.transform.parent = this.transform;
         cell.ball.trigger.enabled = true;
         cell.isTopRow = topRowRect.Contains(cell.gridPosition);
@@ -233,14 +235,15 @@ public class GameGrid : MonoBehaviour
 
     public void RemoveConnected(GridCell currentCell)
     {
-        if (!GameStarted) return;
+        if (!gameStarted) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
         if (connectedcells.Count >= 3)
         {
+
             foreach (var cell in connectedcells)
             {
-                cell.Fall(currentCell.gridPosition, 2);
+                cell.Fall(currentCell.gridPosition + Vector3.down * 2, 4);
             }
         }
         this.needFloodFiil = true;

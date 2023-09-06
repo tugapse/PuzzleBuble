@@ -5,23 +5,29 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
 
+    public GameGrid gameGrid;
     public GameObject[] Balls;
     public float shootForce = 40f;
     public Transform nextBallTranform;
-    GameObject currentBall;
-    GameObject nextBall;
-    public float maxCooldown = 120;
-    public Color GizmoColor = Color.cyan;
+    public BallSpawnerAnimations animations;
+    private GameObject currentBall;
+    private GameObject nextBall;
+    public PlayerControler playerControler;
+    Color GizmoColor = Color.cyan;
+
+
+
 
     public void Spawn()
     {
         this.currentBall = this.nextBall;
+
         if (this.currentBall == null)
         {
             this.currentBall = this.Balls[Random.Range(0, Balls.Length)];
         }
         this.nextBall = this.Balls[Random.Range(0, Balls.Length)];
-        this.SwapSprites();
+        this.animations.StartAnimation();
     }
 
     private void SwapSprites()
@@ -34,8 +40,9 @@ public class BallSpawner : MonoBehaviour
 
     public bool Shoot(Vector3 direction)
     {
-        if (!PlayerControler.current.canShoot) return false;
+        if (!this.playerControler.canShoot) return false;
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
+        ball.GetComponent<Ball>().gameGrid = this.gameGrid;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.shootForce, ForceMode2D.Impulse);
         return true;
@@ -50,6 +57,6 @@ public class BallSpawner : MonoBehaviour
     }
     public GameObject InstanciateBall(Vector3 position)
     {
-        return Instantiate(this.Balls[Random.Range(0, Balls.Length )], position, Quaternion.identity);
+        return Instantiate(this.Balls[Random.Range(0, Balls.Length)], position, Quaternion.identity);
     }
 }

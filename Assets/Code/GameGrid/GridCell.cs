@@ -12,6 +12,7 @@ public class GridCell
     public Vector3 gridPosition;
     public Ball ball;
     public bool isDirty;
+    public GameGrid gameGrid;
     public List<GridCell> connectedCells
     {
         get
@@ -20,7 +21,7 @@ public class GridCell
             if (this.isEmpty) return result;
             foreach (Ball ball in this.ball.conections)
             {
-                var cell = GameGrid.current.GetGridPosition(ball.transform.position);
+                var cell = gameGrid.GetGridPosition(ball.transform.position);
                 result.Add(cell);
             }
             return result;
@@ -47,7 +48,7 @@ public class GridCell
     {
         foreach (var cell in this.connectedCells)
         {
-            cell.RemoveConnection(this);
+            if (cell != null) cell.RemoveConnection(this);
         }
     }
 
@@ -79,6 +80,7 @@ public class GridCell
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.gravityScale = gravityMultiply;
+        this.SetBallOpacity();
         this.Clear(false);
     }
     public void Fall(Vector3 explosionPoint, float gravityMultiply = 1f)
@@ -91,11 +93,11 @@ public class GridCell
                 collider.enabled = false;
             }
         }
-        this.Explode(explosionPoint);
+        this.Explode(explosionPoint, gravityMultiply);
         this.Clear(false);
     }
 
-    private void Explode(Vector3 explosionPoint, float gravityMultiply = 1f, float force = 5f)
+    private void Explode(Vector3 explosionPoint, float gravityMultiply = 1.9f, float force = 5f)
     {
         Rigidbody2D rb = this.ball.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
@@ -105,12 +107,24 @@ public class GridCell
 
         if (explosionPoint == gridPosition)
         {
-            rb.AddForce(explosionPoint * force + Vector3.down * 1 + random, ForceMode2D.Impulse);
+            rb.AddForce(explosionPoint + Vector3.down * force + random.normalized, ForceMode2D.Impulse);
         }
         else
         {
             rb.AddForce(explosionPoint * force + random, ForceMode2D.Impulse);
         }
         rb.gravityScale = gravityMultiply;
+        ball.GetComponent<DestroyScript>().StartTimer();
+        SetBallOpacity();
+    }
+
+    private void SetBallOpacity()
+    {
+        SpriteRenderer sp = ball.GetComponent<SpriteRenderer>();
+        if (sp != null && sp.color.a == 1f)
+        {
+            sp.color = sp.color - new Color(0, 0, 0, 0.5f);
+        }
+
     }
 }

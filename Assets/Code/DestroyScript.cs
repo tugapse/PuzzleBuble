@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class DestroyScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool timerActive = false;
+    private float waitTime = 5;
+    public void StartTimer()
     {
+        this.timerActive = true;
 
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        if (!timerActive) return;
 
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        GameObject.Destroy(other.gameObject);
+        waitTime -= Time.deltaTime;
+
+        if (waitTime < 0)
+        {
+            waitTime = 0;
+            Destroy(gameObject);
+        }
+
     }
 }
