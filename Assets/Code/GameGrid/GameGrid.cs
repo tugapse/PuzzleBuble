@@ -8,13 +8,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-struct VisitedCell
-{
-    public int index;
-    public GridCell cell;
-    public bool wasVisited;
-
-}
 public class GameGrid : MonoBehaviour
 {
 
@@ -31,6 +24,7 @@ public class GameGrid : MonoBehaviour
     public Transform spawnerTopRowPoint;
     public Transform gridContainer;
     public BallSpawner ballspawner;
+    public ParticleSystem explotionParticles;
 
 
     int frameDelay = 300;
@@ -240,15 +234,24 @@ public class GameGrid : MonoBehaviour
         var connectedcells = this.GetConnectedCells(currentCell, visited);
         if (connectedcells.Count >= 3)
         {
-
+            EmmitExplosionParticles(currentCell);
             foreach (var cell in connectedcells)
             {
-                cell.Fall(currentCell.gridPosition + Vector3.down * 2, 4);
+                // cell.Fall(currentCell.gridPosition + Vector3.down * 2, 4);
+                cell.Clear();
             }
         }
         this.needFloodFiil = true;
     }
 
+    private void EmmitExplosionParticles(GridCell currentCell)
+    {
+        ParticleSystem.MainModule settings = this.explotionParticles.main;
+
+        settings.startColor = new ParticleSystem.MinMaxGradient(currentCell.ball.GetComponent<SpriteRenderer>().color);
+        this.explotionParticles.transform.position = currentCell.gridPosition;
+        this.explotionParticles.Emit(20);
+    }
 
     private void OnDrawGizmos()
     {
