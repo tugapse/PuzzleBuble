@@ -53,6 +53,7 @@ public class GameGrid : MonoBehaviour
 
 
     }
+
     bool CanUpdate()
     {
         gameStartDelay -= Time.fixedDeltaTime;
@@ -148,26 +149,12 @@ public class GameGrid : MonoBehaviour
     private void ComputeGrid(bool instantiateBall)
     {
         float increment = 0f;
-        float halfx = Size.x / 2;
-        float halfy = Size.y;
 
         for (int y = 0; y <= Size.y; y++)
         {
             for (int x = 0; x <= Size.x; x++)
             {
-                Vector3 newPosition = Vector3.zero;
-
-                if (MathF.Abs(y) % 2 != 0)
-                {
-                    newPosition = this.transform.position + new Vector3(x, 1 * -(y - halfy - 0.5f - increment)) - Vector3.right * halfx;
-                }
-                else
-                {
-                    newPosition = this.transform.position + new Vector3(x + 0.5f, 1 * -(y - halfy - 0.5f - increment), 0) - Vector3.right * halfx;
-
-                }
-                GridCell cell = new GridCell() { gridPosition = newPosition, gameGrid = this };
-
+                GridCell cell = new GridCell() { gridPosition = this.ComputeGridPosition(increment, x, y), gameGrid = this };
 
                 if (instantiateBall)
                     this.CheckSpawnPointAndAddBall(cell);
@@ -261,36 +248,29 @@ public class GameGrid : MonoBehaviour
 
     private void DrawGrid()
     {
-        float halfx = Size.x / 2;
-        float halfy = Size.y;
-        int minX = (int)(this.transform.position.x - halfx);
-        int maxX = (int)(this.transform.position.x + halfx);
-
-        int minY = (int)(this.transform.position.y + halfy);
-        int maxY = (int)(this.transform.position.y - halfy);
+        float radius = 0.5f;
         Gizmos.color = gridColor;
         float increment = 0f;
         for (float y = 0; y <= Size.y; y += cellSize)
         {
             Gizmos.color = gridColor;
-            Vector3 fromPosition = transform.position - new Vector3(minX, y - halfy, 0);
-            Vector3 toPosition = transform.position - new Vector3(maxX, y - halfy, 0);
-            // Gizmos.DrawLine(fromPosition, toPosition);
+
             for (float x = 0; x <= Size.x; x += cellSize)
             {
-                if (MathF.Abs(y) % 2 != 0)
-                {
-                    Gizmos.DrawWireSphere(transform.position + new Vector3(x, 1 * -(y - halfy - 0.5f - increment)) - Vector3.right * halfx, 0.5f); ;
-                }
-                else
-                {
-                    Gizmos.DrawWireSphere(transform.position + new Vector3(x + 0.5f, 1 * -(y - halfy - 0.5f - increment), 0) - Vector3.right * halfx, 0.5f);
 
-                }
+                Gizmos.DrawWireSphere(this.ComputeGridPosition(increment, x, y), radius);
             }
             increment += 0.1f;
 
         }
+    }
+
+    private Vector3 ComputeGridPosition(float increment, float x, float y)
+    {
+        bool isOdd = MathF.Abs(y) % 2 != 0;
+        float xOffset = isOdd ? 0.5f : 0;
+        float radius = 0.5f;
+        return this.transform.position + new Vector3(x + xOffset, 1 * (y - radius - increment), 0);
     }
 
     private void DrawCells()
