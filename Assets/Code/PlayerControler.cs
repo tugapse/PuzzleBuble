@@ -5,15 +5,13 @@ public class PlayerControler : MonoBehaviour
 {
 
     public GameGrid gamegrid;
-    public float rotationSpeed = 0.2f;
-    public AnimationCurve speedCurve;
-    public float maxRotation = 30f;
     public Transform arrow;
     public Transform mira;
     float currentRotation = 0;
 
     public BallSpawner spawnner;
     public bool canShoot { get; set; } = false;
+    public PlayerData playerData;
 
 
 
@@ -35,8 +33,7 @@ public class PlayerControler : MonoBehaviour
             if (this.canShoot)
             {
                 canShoot = false;
-                this.spawnner.Shoot(this.transform.up);
-                this.spawnner.Spawn();
+                playerData.Shoot(transform.up);
             }
         }
     }
@@ -44,13 +41,13 @@ public class PlayerControler : MonoBehaviour
     void CheckHandleRotation()
     {
         float rotation = Input.GetAxisRaw("Horizontal");
-        this.currentRotation += rotation * this.rotationSpeed * Time.deltaTime;
+        this.currentRotation += rotation * this.playerData.RotationSpeed * Time.deltaTime;
         this.currentRotation = this.clampRotation(this.currentRotation);
         this.transform.rotation = Quaternion.Euler(0, 0, -this.currentRotation);
     }
     float clampRotation(float rotaion)
     {
-        return Mathf.Max(-this.maxRotation, Mathf.Min(this.maxRotation, rotaion));
+        return Mathf.Max(-this.playerData.maxRotationAngle, Mathf.Min(this.playerData.maxRotationAngle, rotaion));
 
     }
 }

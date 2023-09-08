@@ -65,15 +65,16 @@
     <Compile Include="Assets\ShakeCamera.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\Code\Database\PlayerData.cs" />
     <Compile Include="Assets\Code\BallSpawnner.cs" />
     <Compile Include="Assets\Code\GameGrid\Spawner.cs" />
+    <Compile Include="Assets\Code\AudioLayer\PlayerAudioLayer.cs" />
     <Compile Include="Assets\Code\gizmos.cs" />
     <Compile Include="Assets\Code\Animations\BallSpawnerAnimations.cs" />
     <Compile Include="Assets\Code\PlayerControler.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragMe.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />
-    <Compile Include="Assets\PlayerAudio.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DropMe.cs" />
     <Compile Include="Assets\Code\UI\StartTimer.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ActiveStateToggler.cs" />

@@ -7,16 +7,30 @@ public class BallSpawner : MonoBehaviour
 
     public GameGrid gameGrid;
     public GameObject[] Balls;
-    public float shootForce = 40f;
     public Transform nextBallTranform;
     public BallSpawnerAnimations animations;
     private GameObject currentBall;
     private GameObject nextBall;
     public PlayerControler playerControler;
+
+    public PlayerData playerData;
+
     Color GizmoColor = Color.cyan;
 
+    void Start()
+    {
+        this.playerData.OnShoot += this.OnPlayerShoot;
+    }
 
+    private void OnPlayerShoot(Vector3 direction)
+    {
+        var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
+        ball.GetComponent<Ball>().gameGrid = this.gameGrid;
+        Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
+        rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
+        this.Spawn();
 
+    }
 
     public void Spawn()
     {
@@ -43,7 +57,7 @@ public class BallSpawner : MonoBehaviour
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
         ball.GetComponent<Ball>().gameGrid = this.gameGrid;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
-        rb.AddForce(direction * this.shootForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
 
     }
 
