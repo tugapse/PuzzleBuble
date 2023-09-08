@@ -74,17 +74,17 @@
     <Compile Include="Assets\Code\PlayerControler.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragMe.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
+    <Compile Include="Assets\Code\Database\GridData.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DropMe.cs" />
     <Compile Include="Assets\Code\UI\StartTimer.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ActiveStateToggler.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragPanel.cs" />
-    <Compile Include="Assets\Code\Helpers\GameGridHelper.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ScrollDetailTexture.cs" />
+    <Compile Include="Assets\Code\Database\BallData.cs" />
     <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\ParallaxBackground_0.cs" />
     <Compile Include="Assets\Actions\GameEvent.cs" />
     <Compile Include="Assets\Code\GameGrid\GridCell.cs" />
-    <Compile Include="Assets\Code\GameGrid\SnapToGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
