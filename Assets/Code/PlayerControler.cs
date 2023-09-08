@@ -13,7 +13,7 @@ public class PlayerControler : MonoBehaviour
     float currentRotation = 0;
 
     public BallSpawner spawnner;
-    public bool canShoot = false;
+    public bool canShoot { get; set; } = false;
 
 
 
@@ -32,9 +32,10 @@ public class PlayerControler : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && canShoot)
         {
-            if (this.spawnner.Shoot(this.transform.up))
+            if (this.canShoot)
             {
                 canShoot = false;
+                this.spawnner.Shoot(this.transform.up);
                 this.spawnner.Spawn();
             }
         }

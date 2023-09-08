@@ -38,14 +38,12 @@ public class BallSpawner : MonoBehaviour
         nextSpriteRenderer.color = this.nextBall.GetComponent<SpriteRenderer>().color;
     }
 
-    public bool Shoot(Vector3 direction)
+    public void Shoot(Vector3 direction)
     {
-        if (!this.playerControler.canShoot) return false;
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
         ball.GetComponent<Ball>().gameGrid = this.gameGrid;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.shootForce, ForceMode2D.Impulse);
-        return true;
 
     }
 
