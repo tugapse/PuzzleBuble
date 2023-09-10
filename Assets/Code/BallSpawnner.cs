@@ -6,7 +6,6 @@ public class BallSpawner : MonoBehaviour
 {
 
     public GameGrid gameGrid;
-    public GameObject[] Balls;
     public Transform nextBallTranform;
     public BallSpawnerAnimations animations;
     private GameObject currentBall;
@@ -14,6 +13,7 @@ public class BallSpawner : MonoBehaviour
     public PlayerControler playerControler;
 
     public PlayerData playerData;
+    public Level level;
 
     Color GizmoColor = Color.cyan;
 
@@ -38,9 +38,9 @@ public class BallSpawner : MonoBehaviour
 
         if (this.currentBall == null)
         {
-            this.currentBall = this.Balls[Random.Range(0, Balls.Length)];
+            this.currentBall = this.level.availableBalls[Random.Range(0, this.level.availableBalls.Length)];
         }
-        this.nextBall = this.Balls[Random.Range(0, Balls.Length)];
+        this.nextBall = this.level.availableBalls[Random.Range(0, this.level.availableBalls.Length)];
         this.animations.StartAnimation();
     }
 
@@ -69,6 +69,6 @@ public class BallSpawner : MonoBehaviour
     }
     public GameObject InstanciateBall(Vector3 position)
     {
-        return Instantiate(this.Balls[Random.Range(0, 4)], position, Quaternion.identity);
+        return Instantiate(this.level.availableBalls[Random.Range(0, this.level.availableBalls.Length)], position, Quaternion.identity);
     }
 }

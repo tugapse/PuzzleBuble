@@ -59,6 +59,7 @@
     <Compile Include="Assets\Unity UI Samples\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
+    <Compile Include="Assets\Code\Database\Level.cs" />
     <Compile Include="Assets\Code\GameGrid\GameGrid.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\ShakeCamera.cs" />

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1f853840b96e04dbd2b5772c59dae4, type: 3}
+  m_Name: Test Level
+  m_EditorClassIdentifier: 
+  availableBalls:
+  - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
+  - {fileID: 9028555844156648720, guid: 542963a405265f449a32109b08b4a97e, type: 3}
+  - {fileID: 9028555844156648720, guid: 20fae95e2aec0a54ea509f83fd600902, type: 3}

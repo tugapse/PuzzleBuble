@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Database/Grid Level")]
+[CreateAssetMenu(menuName = "Database/Grid")]
 public class GridData : ScriptableObject
 {
 
