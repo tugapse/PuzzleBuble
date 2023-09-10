@@ -136,12 +136,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39157fcf2d3747b42b60715a43eb7fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: 0
-  toDestroy: 0
   color: 2
   trigger: {fileID: 7755433960334754679}
   conections: []
   sameColorConections: []
+  gameGrid: {fileID: 0}
+  gridData: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
 --- !u!50 &-3441900996437292610
 Rigidbody2D:
   serializedVersion: 4

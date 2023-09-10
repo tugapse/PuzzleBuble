@@ -8,17 +8,17 @@ public class GridData : ScriptableObject
 {
 
     public UnityAction<Collider2D[]> OnBallCollision;
-    public UnityAction<Collider2D[]> OnBallExplode;
+    public UnityAction<GridCell[]> OnBallExplode;
 
     public void BallCollision()
     {
         if (this.OnBallCollision != null) this.OnBallCollision(null);
     }
 
-    public void BallExplode()
-    {
-        if (this.OnBallExplode != null) this.OnBallExplode(null);
-    }
 
+    public void BallExplode(List<GridCell> balls)
+    {
+        if (this.OnBallExplode != null) this.OnBallExplode(balls.ToArray());
+    }
 
 }

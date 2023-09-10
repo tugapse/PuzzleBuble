@@ -5,18 +5,19 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
 
-    public bool active = true;
-    public bool toDestroy = false;
+
     public int color = -1;
     public CircleCollider2D trigger;
     public List<Ball> conections = new List<Ball>();
     public List<Ball> sameColorConections = new List<Ball>();
     public GameGrid gameGrid;
+    public GridData gridData;
 
 
 
     void OnCollisionEnter2D(Collision2D other)
     {
+
 
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {

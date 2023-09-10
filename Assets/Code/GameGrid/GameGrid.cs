@@ -223,7 +223,7 @@ public class GameGrid : MonoBehaviour
         if (connectedcells.Count >= 3)
         {
             EmmitExplosionParticles(currentCell);
-            this.gridData.BallExplode();
+            this.gridData.BallExplode(connectedcells);
             foreach (var cell in connectedcells)
             {
                 // cell.Fall(currentCell.gridPosition + Vector3.down * 2, 4);

@@ -44,6 +44,7 @@ public class PlayerControler : MonoBehaviour
         this.currentRotation += rotation * this.playerData.RotationSpeed * Time.deltaTime;
         this.currentRotation = this.clampRotation(this.currentRotation);
         this.transform.rotation = Quaternion.Euler(0, 0, -this.currentRotation);
+        if (rotation != 0) playerData.Turn(-this.currentRotation);
     }
     float clampRotation(float rotaion)
     {

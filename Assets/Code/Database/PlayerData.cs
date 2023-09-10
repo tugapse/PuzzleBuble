@@ -11,10 +11,16 @@ public class PlayerData : ScriptableObject
     public float maxRotationAngle;
 
     public UnityAction<Vector3> OnShoot;
+    public UnityAction<float> OnTurn;
 
     public void Shoot(Vector3 direction)
     {
         if (this.OnShoot != null) this.OnShoot(direction);
+    }
+
+    public void Turn(float angle)
+    {
+        if (this.OnShoot != null) this.OnTurn(angle);
     }
 
 }

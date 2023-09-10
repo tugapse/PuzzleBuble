@@ -4,23 +4,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+
 public class PlayerAudioLayer : MonoBehaviour
 {
+
     public PlayerData playerData;
     public GridData gridData;
+    public float minTurnAngleToPlaySound = 2;
 
     [Header("Audio Sources")]
     public AudioSource shootAudio;
+    public AudioSource turn;
     public AudioSource explodeBuble;
 
     // Start is called before the first frame update
     void Start()
     {
         playerData.OnShoot += this.OnShoot;
+        playerData.OnTurn += this.OnTurn;
         gridData.OnBallExplode += this.onBallExplode;
     }
 
-    private void onBallExplode(Collider2D[] arg0)
+    private float lastTurnedAngle = 0;
+    private void OnTurn(float angle)
+    {
+        float diff = Mathf.Abs(lastTurnedAngle - angle);
+        if (diff >= this.minTurnAngleToPlaySound && this.turn != null)
+        {
+            this.lastTurnedAngle = angle;
+            this.turn.Play();
+        }
+    }
+
+    private void onBallExplode(GridCell[] cells)
     {
         if (this.explodeBuble != null) this.explodeBuble.Play();
     }
@@ -31,11 +48,4 @@ public class PlayerAudioLayer : MonoBehaviour
 
     }
 
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
