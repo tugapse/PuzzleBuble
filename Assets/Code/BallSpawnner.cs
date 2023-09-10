@@ -47,9 +47,9 @@ public class BallSpawner : MonoBehaviour
     private void SwapSprites()
     {
         SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer>();
-        spriteRenderer.color = this.currentBall.GetComponent<SpriteRenderer>().color;
+        spriteRenderer.sprite = this.currentBall.GetComponent<SpriteRenderer>().sprite;
         SpriteRenderer nextSpriteRenderer = this.nextBallTranform.GetComponent<SpriteRenderer>();
-        nextSpriteRenderer.color = this.nextBall.GetComponent<SpriteRenderer>().color;
+        nextSpriteRenderer.sprite = this.nextBall.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void Shoot(Vector3 direction)
@@ -69,6 +69,6 @@ public class BallSpawner : MonoBehaviour
     }
     public GameObject InstanciateBall(Vector3 position)
     {
-        return Instantiate(this.Balls[Random.Range(0, Balls.Length)], position, Quaternion.identity);
+        return Instantiate(this.Balls[Random.Range(0, 4)], position, Quaternion.identity);
     }
 }
