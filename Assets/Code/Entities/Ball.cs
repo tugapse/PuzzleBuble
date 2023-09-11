@@ -10,7 +10,8 @@ public class Ball : MonoBehaviour
     public CircleCollider2D trigger;
     public List<Ball> conections = new List<Ball>();
     public List<Ball> sameColorConections = new List<Ball>();
-    public GameGrid gameGrid;
+    public GridCell parentCell = null;
+
     public GridData gridData;
     public Color ExplosionColor;
 
@@ -23,17 +24,18 @@ public class Ball : MonoBehaviour
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {
             if (!this.PrepareBigidBody()) return;
+
             GridCell cell = this.Snap();
             if (cell == null) return;
             this.trigger.enabled = true;
             this.CheckIsTopRow(cell, other);
-            gameGrid.RemoveConnected(cell);
+            this.gridData.RemoveConnected(cell);
 
         }
     }
     private void CheckIsTopRow(GridCell cell, Collision2D other)
     {
-        if (gameGrid.gameStarted)
+        if (gridData.CurrentGrid.gameStarted)
         {
             cell.isTopRow = other.gameObject.tag == "Top";
         }
@@ -65,12 +67,13 @@ public class Ball : MonoBehaviour
     {
 
 
-        GridCell cell = gameGrid.GetGridPosition(this.transform.position);
+        GridCell cell = gridData.CurrentGrid.GetGridPosition(this.transform.position);
         if (cell != null)
         {
             cell.ball = this;
+            this.parentCell = cell;
             this.transform.position = cell.gridPosition;
-            this.gameObject.transform.parent = gameGrid.transform;
+            this.gameObject.transform.parent = gridData.CurrentGrid.transform;
         }
         return cell;
     }
@@ -85,8 +88,8 @@ public class Ball : MonoBehaviour
             {
                 continue;
             }
-            Gizmos.color = Color.black;
-            Gizmos.DrawLine(ball.transform.position, this.transform.position);
+            UnityEngine.Gizmos.color = Color.black;
+            UnityEngine.Gizmos.DrawLine(ball.transform.position, this.transform.position);
         }
         // if (drawConnections)
         foreach (var ball in this.conections)
@@ -95,8 +98,8 @@ public class Ball : MonoBehaviour
             {
                 continue;
             }
-            Gizmos.color = Color.black;
-            Gizmos.DrawLine(ball.transform.position, this.transform.position);
+            UnityEngine.Gizmos.color = Color.black;
+            UnityEngine.Gizmos.DrawLine(ball.transform.position, this.transform.position);
         }
     }
 

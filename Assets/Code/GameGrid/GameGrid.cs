@@ -41,6 +41,7 @@ public class GameGrid : MonoBehaviour
     void Start()
     {
         this.ComputeGrid(true);
+        this.gridData.OnRemoveConnected += this.RemoveConnected;
     }
 
 
@@ -182,7 +183,7 @@ public class GameGrid : MonoBehaviour
 
         GameObject instance = this.ballspawner.InstanciateBall(cell.gridPosition);
         cell.ball = instance.GetComponent<Ball>();
-        cell.ball.gameGrid = this;
+        cell.ball.gridData = this.gridData;
         cell.ball.transform.parent = this.transform;
         cell.ball.trigger.enabled = true;
         cell.isTopRow = topRowRect.Contains(cell.gridPosition);
@@ -242,16 +243,16 @@ public class GameGrid : MonoBehaviour
     private void DrawGrid()
     {
         float radius = 0.5f;
-        Gizmos.color = gridColor;
+        UnityEngine.Gizmos.color = gridColor;
         float increment = 0f;
         for (float y = 0; y <= Size.y; y += cellSize)
         {
-            Gizmos.color = gridColor;
+            UnityEngine.Gizmos.color = gridColor;
 
             for (float x = 0; x <= Size.x; x += cellSize)
             {
 
-                Gizmos.DrawWireSphere(this.ComputeGridPosition(increment, x, y), radius);
+                UnityEngine.Gizmos.DrawWireSphere(this.ComputeGridPosition(increment, x, y), radius);
             }
             increment += 0.1f;
 
@@ -268,11 +269,11 @@ public class GameGrid : MonoBehaviour
 
     private void DrawCells()
     {
-        Gizmos.color = this.cellColor;
+        UnityEngine.Gizmos.color = this.cellColor;
         for (int i = 0; i < gameCells.Count; i++)
         {
             GridCell c = this.gameCells[i];
-            Gizmos.DrawWireSphere(c.gridPosition, 0.5f);
+            UnityEngine.Gizmos.DrawWireSphere(c.gridPosition, 0.5f);
         }
 
     }

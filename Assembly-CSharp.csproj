@@ -57,25 +57,27 @@
   <ItemGroup>
     <Compile Include="Assets\Unity UI Samples\Scripts\PanelManager.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\Code\AudioLayer\BackgroundMusic.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
     <Compile Include="Assets\Code\Database\Level.cs" />
     <Compile Include="Assets\Code\GameGrid\GameGrid.cs" />
+    <Compile Include="Assets\TestU.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\ShakeCamera.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\Code\Entities\PlayerControler.cs" />
     <Compile Include="Assets\Code\Entities\Ball.cs" />
     <Compile Include="Assets\Code\Database\PlayerData.cs" />
     <Compile Include="Assets\Code\BallSpawnner.cs" />
     <Compile Include="Assets\Code\GameGrid\Spawner.cs" />
     <Compile Include="Assets\Code\AudioLayer\PlayerAudioLayer.cs" />
-    <Compile Include="Assets\Code\gizmos.cs" />
     <Compile Include="Assets\Code\Animations\BallSpawnerAnimations.cs" />
-    <Compile Include="Assets\Code\PlayerControler.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DragMe.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
     <Compile Include="Assets\Code\Database\GridData.cs" />
+    <Compile Include="Assets\Code\Entities\Warning Stage.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />
     <Compile Include="Assets\Unity UI Samples\Scripts\DropMe.cs" />
     <Compile Include="Assets\Code\UI\StartTimer.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Code\Database\BallData.cs" />
     <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\ParallaxBackground_0.cs" />
     <Compile Include="Assets\Actions\GameEvent.cs" />
+    <Compile Include="Assets\Code\Helpers\Gizmos.cs" />
     <Compile Include="Assets\Code\GameGrid\GridCell.cs" />
   </ItemGroup>
   <ItemGroup>

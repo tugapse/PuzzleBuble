@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
 
-    public GameGrid gameGrid;
+    public GridData gridData;
     public Transform nextBallTranform;
     public BallSpawnerAnimations animations;
     private GameObject currentBall;
@@ -20,13 +20,14 @@ public class BallSpawner : MonoBehaviour
     void Start()
     {
         this.playerData.OnShoot += this.OnPlayerShoot;
+
     }
 
     private void OnPlayerShoot(Vector3 direction)
     {
-        var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
-        ball.GetComponent<Ball>().gameGrid = this.gameGrid;
-        Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
+        var ballObject = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
+        ballObject.GetComponent<Ball>().gridData = this.gridData;
+        Rigidbody2D rb = ballObject.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
         this.Spawn();
 
@@ -55,7 +56,7 @@ public class BallSpawner : MonoBehaviour
     public void Shoot(Vector3 direction)
     {
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
-        ball.GetComponent<Ball>().gameGrid = this.gameGrid;
+        ball.GetComponent<Ball>().gridData = this.gridData;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
 
@@ -63,9 +64,9 @@ public class BallSpawner : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = this.GizmoColor;
-        Gizmos.DrawWireSphere(this.transform.position, 0.5f);
-        Gizmos.DrawWireSphere(this.nextBallTranform.position, 0.5f);
+        UnityEngine.Gizmos.color = this.GizmoColor;
+        UnityEngine.Gizmos.DrawWireSphere(this.transform.position, 0.5f);
+        UnityEngine.Gizmos.DrawWireSphere(this.nextBallTranform.position, 0.5f);
     }
     public GameObject InstanciateBall(Vector3 position)
     {
