@@ -13,7 +13,6 @@ public class GameGrid : MonoBehaviour
 
 
     public float gameStartDelay = 2;
-    public int phisycsFrameDelay = 5;
 
     public bool gameStarted;
 
@@ -63,15 +62,7 @@ public class GameGrid : MonoBehaviour
             this.gameStarted = true;
             gameStartDelay = 0;
         }
-        if (!gameStarted) return false;
-
-        if (frameDelay >= 0)
-        {
-            frameDelay--;
-            return false;
-        }
-        frameDelay = phisycsFrameDelay;
-        return true;
+        return gameStarted;
     }
 
     private void FloodCheck()
@@ -237,7 +228,7 @@ public class GameGrid : MonoBehaviour
     {
         ParticleSystem.MainModule settings = this.explotionParticles.main;
 
-        settings.startColor = new ParticleSystem.MinMaxGradient(currentCell.ball.GetComponent<SpriteRenderer>().color);
+        settings.startColor = new ParticleSystem.MinMaxGradient(currentCell.ball.ExplosionColor);
         this.explotionParticles.transform.position = currentCell.gridPosition;
         this.explotionParticles.Emit(20);
     }

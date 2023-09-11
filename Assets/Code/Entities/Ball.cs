@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     public List<Ball> sameColorConections = new List<Ball>();
     public GameGrid gameGrid;
     public GridData gridData;
+    public Color ExplosionColor;
 
 
 

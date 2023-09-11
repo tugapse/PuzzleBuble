@@ -9,5 +9,6 @@ public class BallData : ScriptableObject
 {
     public String colorName;
     public int colorIndex;
+    public Color ExplosionColor;
 
 }

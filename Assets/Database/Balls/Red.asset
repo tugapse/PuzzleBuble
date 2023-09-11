@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorName: Red
   colorIndex: 3
+  ExplosionColor: {r: 0.8490566, g: 0.1393734, b: 0.1393734, a: 0}

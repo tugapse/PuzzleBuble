@@ -142,6 +142,7 @@ MonoBehaviour:
   sameColorConections: []
   gameGrid: {fileID: 0}
   gridData: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
+  ExplosionColor: {r: 0.80392164, g: 0.6509804, b: 1, a: 1}
 --- !u!50 &6553360549724154753
 Rigidbody2D:
   serializedVersion: 4
