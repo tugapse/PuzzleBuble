@@ -34,7 +34,7 @@ public class GridData : ScriptableObject
 
     public void WarningState()
     {
-        if (this.OnWarningState != null) this.OnWarningState();
+        this.OnWarningState();
 
     }
 

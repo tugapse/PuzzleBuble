@@ -9,7 +9,7 @@ public class BackgroundMusic : MonoBehaviour
     public GridData gridData;
 
 
-    public float NormalPitch = 1f;
+    public float normalPitch = 1f;
     public float warningPitch = 1.4f;
 
     // Start is called before the first frame update
@@ -21,12 +21,13 @@ public class BackgroundMusic : MonoBehaviour
 
     private void OnWarningState()
     {
+        Debug.Log("Warning State");
         this.audioSource.pitch = this.warningPitch;
     }
 
     private void OnNormalState()
     {
-        this.audioSource.pitch = this.NormalPitch;
+        this.audioSource.pitch = this.normalPitch;
 
     }
 

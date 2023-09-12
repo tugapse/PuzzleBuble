@@ -43,8 +43,10 @@ public class Ball : MonoBehaviour
     private bool PrepareBigidBody()
     {
         Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
-        if (rb.bodyType == RigidbodyType2D.Static) return false;
-        rb.bodyType = RigidbodyType2D.Static;
+        if (rb.bodyType == RigidbodyType2D.Kinematic) return false;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = 0;
         return true;
     }
 
@@ -65,8 +67,6 @@ public class Ball : MonoBehaviour
 
     public GridCell Snap()
     {
-
-
         GridCell cell = gridData.CurrentGrid.GetGridPosition(this.transform.position);
         if (cell != null)
         {
