@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WarningStage : MonoBehaviour
 {
-    public GridData gridData;
+    public LevelManager levelManager;
 
     private void OnTriggerStay2D(Collider2D other)
     {
@@ -14,7 +14,7 @@ public class WarningStage : MonoBehaviour
             Ball ball = other.gameObject.GetComponent<Ball>();
             if (ball.parentCell == null) return;
             Debug.Log("Other Game Object " + other.gameObject.name);
-            this.gridData.WarningState();
+            this.levelManager.WarningState();
 
         }
     }
@@ -27,7 +27,7 @@ public class WarningStage : MonoBehaviour
             Ball ball = other.gameObject.GetComponent<Ball>();
             if (ball.parentCell == null) return;
             Debug.Log("Other Game Object " + other.gameObject.name);
-            this.gridData.NormalState();
+            this.levelManager.NormalState();
 
         }
     }

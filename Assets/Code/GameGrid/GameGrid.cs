@@ -24,7 +24,7 @@ public class GameGrid : MonoBehaviour
     public Transform gridContainer;
     public BallSpawner ballspawner;
     public ParticleSystem explotionParticles;
-    public GridData gridData;
+    public LevelManager levelManager;
 
 
     int frameDelay = 300;
@@ -41,7 +41,7 @@ public class GameGrid : MonoBehaviour
     void Start()
     {
         this.ComputeGrid(true);
-        this.gridData.OnRemoveConnected += this.RemoveConnected;
+        this.levelManager.OnRemoveConnected += this.RemoveConnected;
     }
 
 
@@ -183,7 +183,7 @@ public class GameGrid : MonoBehaviour
 
         GameObject instance = this.ballspawner.InstanciateBall(cell.gridPosition);
         cell.ball = instance.GetComponent<Ball>();
-        cell.ball.gridData = this.gridData;
+        cell.ball.levelManager = this.levelManager;
         cell.ball.transform.parent = this.transform;
         cell.ball.trigger.enabled = true;
         cell.isTopRow = topRowRect.Contains(cell.gridPosition);
@@ -214,13 +214,21 @@ public class GameGrid : MonoBehaviour
         var connectedcells = this.GetConnectedCells(currentCell, visited);
         if (connectedcells.Count >= 3)
         {
-            EmmitExplosionParticles(currentCell);
-            this.gridData.BallExplode(connectedcells);
-            foreach (var cell in connectedcells)
-            {
-                // cell.Fall(currentCell.gridPosition + Vector3.down * 2, 4);
-                cell.Clear();
-            }
+
+            StartCoroutine(this.ExplodePartcles(connectedcells));
+
+        }
+
+    }
+    IEnumerator ExplodePartcles(List<GridCell> connectedcells)
+    {
+        foreach (var cell in connectedcells)
+        {
+            EmmitExplosionParticles(cell);
+            this.levelManager.BallExplode(connectedcells);
+            cell.Clear();
+            yield return new WaitForSeconds(0.05f);
+
         }
         this.needFloodFiil = true;
     }

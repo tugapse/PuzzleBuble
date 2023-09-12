@@ -6,7 +6,7 @@ using UnityEngine;
 public class BackgroundMusic : MonoBehaviour
 {
     public AudioSource audioSource;
-    public GridData gridData;
+    public LevelManager levelManager;
 
 
     public float normalPitch = 1f;
@@ -15,8 +15,8 @@ public class BackgroundMusic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.gridData.OnNormalState += this.OnNormalState;
-        this.gridData.OnWarningState += this.OnWarningState;
+        this.levelManager.OnNormalState += this.OnNormalState;
+        this.levelManager.OnWarningState += this.OnWarningState;
     }
 
     private void OnWarningState()
