@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
 
-    public GridData gridData;
+    public LevelManager levelManager;
     public Transform nextBallTranform;
     public BallSpawnerAnimations animations;
     private GameObject currentBall;
@@ -26,7 +26,7 @@ public class BallSpawner : MonoBehaviour
     private void OnPlayerShoot(Vector3 direction)
     {
         var ballObject = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
-        ballObject.GetComponent<Ball>().gridData = this.gridData;
+        ballObject.GetComponent<Ball>().levelManager = this.levelManager;
         Rigidbody2D rb = ballObject.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
         this.Spawn();
@@ -56,7 +56,7 @@ public class BallSpawner : MonoBehaviour
     public void Shoot(Vector3 direction)
     {
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
-        ball.GetComponent<Ball>().gridData = this.gridData;
+        ball.GetComponent<Ball>().levelManager = this.levelManager;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
         rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
 

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd4a3040a252e4fb223e6fda8ca638, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  shootForce: 30
-  RotationSpeed: 120
+  shootForce: 20
+  RotationSpeed: 80
   maxRotationAngle: 85

@@ -12,7 +12,7 @@ public class Ball : MonoBehaviour
     public List<Ball> sameColorConections = new List<Ball>();
     public GridCell parentCell = null;
 
-    public GridData gridData;
+    public LevelManager levelManager;
     public Color ExplosionColor;
 
 
@@ -29,13 +29,13 @@ public class Ball : MonoBehaviour
             if (cell == null) return;
             this.trigger.enabled = true;
             this.CheckIsTopRow(cell, other);
-            this.gridData.RemoveConnected(cell);
+            this.levelManager.RemoveConnected(cell);
 
         }
     }
     private void CheckIsTopRow(GridCell cell, Collision2D other)
     {
-        if (gridData.CurrentGrid.gameStarted)
+        if (levelManager.CurrentGrid.gameStarted)
         {
             cell.isTopRow = other.gameObject.tag == "Top";
         }
@@ -43,8 +43,10 @@ public class Ball : MonoBehaviour
     private bool PrepareBigidBody()
     {
         Rigidbody2D rb = this.GetComponent<Rigidbody2D>();
-        if (rb.bodyType == RigidbodyType2D.Static) return false;
-        rb.bodyType = RigidbodyType2D.Static;
+        if (rb.bodyType == RigidbodyType2D.Kinematic) return false;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = 0;
         return true;
     }
 
@@ -65,15 +67,13 @@ public class Ball : MonoBehaviour
 
     public GridCell Snap()
     {
-
-
-        GridCell cell = gridData.CurrentGrid.GetGridPosition(this.transform.position);
+        GridCell cell = levelManager.CurrentGrid.GetGridPosition(this.transform.position);
         if (cell != null)
         {
             cell.ball = this;
             this.parentCell = cell;
             this.transform.position = cell.gridPosition;
-            this.gameObject.transform.parent = gridData.CurrentGrid.transform;
+            this.gameObject.transform.parent = levelManager.CurrentGrid.transform;
         }
         return cell;
     }

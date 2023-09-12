@@ -10,7 +10,7 @@ public class PlayerAudioLayer : MonoBehaviour
 {
 
     public PlayerData playerData;
-    public GridData gridData;
+    public LevelManager levelManager;
     public float minTurnAngleToPlaySound = 2;
 
     [Header("Audio Sources")]
@@ -23,7 +23,7 @@ public class PlayerAudioLayer : MonoBehaviour
     {
         playerData.OnShoot += this.OnShoot;
         playerData.OnTurn += this.OnTurn;
-        gridData.OnBallExplode += this.onBallExplode;
+        levelManager.OnBallExplode += this.onBallExplode;
     }
 
     private float lastTurnedAngle = 0;
