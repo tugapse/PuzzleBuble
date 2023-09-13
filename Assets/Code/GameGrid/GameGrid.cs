@@ -212,12 +212,8 @@ public class GameGrid : MonoBehaviour
         if (!gameStarted) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
-        if (connectedcells.Count >= 3)
-        {
+        if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(connectedcells));
 
-            StartCoroutine(this.ExplodePartcles(connectedcells));
-
-        }
 
     }
     IEnumerator ExplodePartcles(List<GridCell> connectedcells)
