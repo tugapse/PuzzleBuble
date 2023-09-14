@@ -58,6 +58,7 @@
     <Compile Include="Assets\Code\Entities\Ball.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\DragPanel.cs" />
+    <Compile Include="Assets\UiManager.cs" />
     <Compile Include="Assets\Code\BallSpawnner.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />

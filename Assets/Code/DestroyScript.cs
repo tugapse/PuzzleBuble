@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class DestroyScript : MonoBehaviour
 {
-    private bool timerActive = false;
-    private float waitTime = 5;
-    public void StartTimer()
+    public ParticleSystem explotionParticles;
+    public LevelManager levelManager;
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        this.timerActive = true;
-
-    }
-    private void Update()
-    {
-        if (!timerActive) return;
-
-        waitTime -= Time.deltaTime;
-
-        if (waitTime < 0)
+        if (other.gameObject.tag == "Ball")
         {
-            waitTime = 0;
-            Destroy(gameObject);
+            Ball ball = other.GetComponent<Ball>();
+            if (ball.parentCell == null) return;
+            ball.parentCell.Clear();
+            this.levelManager.BallExplode(new List<GridCell> { ball.parentCell });
+            this.EmmitExplosionParticles(other.transform.position, other.GetComponent<Ball>().ExplosionColor);
         }
+    }
 
+    private void EmmitExplosionParticles(Vector3 position, Color color)
+    {
+        ParticleSystem.MainModule settings = this.explotionParticles.main;
+
+        settings.startColor = new ParticleSystem.MinMaxGradient(color);
+        this.explotionParticles.transform.position = position;
+        this.explotionParticles.Emit(20);
     }
 }
