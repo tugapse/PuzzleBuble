@@ -38,7 +38,7 @@ public class GridCell
     public void Clear(bool destroy = true)
     {
         this.ClearConnections();
-        if (destroy) GameObject.Destroy(ball.gameObject);
+        if (destroy && ball?.gameObject) GameObject.Destroy(ball.gameObject);
         this.ball = null;
         this.isTopRow = false;
         this.isDirty = false;
@@ -75,7 +75,7 @@ public class GridCell
         {
             foreach (var collider in colliders)
             {
-                collider.enabled = false;
+                collider.enabled = collider.isTrigger;
             }
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
@@ -86,6 +86,7 @@ public class GridCell
     public void Fall(Vector3 explosionPoint, float gravityMultiply = 1f)
     {
         var colliders = this.ball.GetComponents<Collider2D>();
+        this.Explode(explosionPoint, gravityMultiply);
         if (colliders != null)
         {
             foreach (var collider in colliders)
@@ -93,7 +94,6 @@ public class GridCell
                 collider.enabled = false;
             }
         }
-        this.Explode(explosionPoint, gravityMultiply);
         this.Clear(false);
     }
 
@@ -114,7 +114,6 @@ public class GridCell
             rb.AddForce(explosionPoint * force + random, ForceMode2D.Impulse);
         }
         rb.gravityScale = gravityMultiply;
-        ball.GetComponent<DestroyScript>().StartTimer();
         SetBallOpacity();
     }
 

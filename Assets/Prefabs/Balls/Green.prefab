@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: -6574808217437150887}
   - component: {fileID: -3441900996437292610}
   - component: {fileID: 7755433960334754679}
-  - component: {fileID: -4062388169404460933}
   m_Layer: 0
   m_Name: Green
   m_TagString: Ball
@@ -140,9 +139,8 @@ MonoBehaviour:
   trigger: {fileID: 7755433960334754679}
   conections: []
   sameColorConections: []
-  gameGrid: {fileID: 0}
-  gridData: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
-  ExplosionColor: {r: 0.19607845, g: 0.73333335, b: 0.23137257, a: 1}
+  levelManager: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
+  ExplosionColor: {r: 0.15884654, g: 0.9150943, b: 0.20852701, a: 0.69803923}
 --- !u!50 &-3441900996437292610
 Rigidbody2D:
   serializedVersion: 4
@@ -205,15 +203,3 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.6
---- !u!114 &-4062388169404460933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9028555844156648720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d09e601d49e874990f74195e67f006, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

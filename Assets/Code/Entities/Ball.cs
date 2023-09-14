@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Ball : MonoBehaviour
 {
@@ -76,6 +77,11 @@ public class Ball : MonoBehaviour
             this.gameObject.transform.parent = levelManager.CurrentGrid.transform;
         }
         return cell;
+    }
+    public void markToExplode()
+    {
+        SpriteRenderer sp = GetComponent<SpriteRenderer>();
+        sp.color = new Vector4(sp.color.r, sp.color.g, sp.color.b, 0.5f);
     }
 
 
