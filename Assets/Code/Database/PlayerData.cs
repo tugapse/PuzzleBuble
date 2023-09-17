@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Database/Player")]
-public class PlayerData : ScriptableObject
+public class PlayerManager : ScriptableObject
 {
     public float shootForce;
     public float RotationSpeed;
@@ -12,6 +12,7 @@ public class PlayerData : ScriptableObject
 
     public UnityAction<Vector3> OnShoot;
     public UnityAction<float> OnTurn;
+    public UnityAction<int> OnScorePointsChanged;
 
     public void Shoot(Vector3 direction)
     {
@@ -21,6 +22,11 @@ public class PlayerData : ScriptableObject
     public void Turn(float angle)
     {
         if (this.OnShoot != null) this.OnTurn(angle);
+    }
+
+    public void AddScorePoints(int points)
+    {
+        this.OnScorePointsChanged?.Invoke(points);
     }
 
 }

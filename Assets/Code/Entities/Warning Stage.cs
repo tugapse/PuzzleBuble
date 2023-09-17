@@ -8,26 +8,21 @@ public class WarningStage : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
-        if (other.gameObject.tag == "Ball")
         {
             Ball ball = other.gameObject.GetComponent<Ball>();
-            if (ball.parentCell == null) return;
-            Debug.Log("Other Game Object " + other.gameObject.name);
-            this.levelManager.WarningState();
+            if (ball.parentCell == null || ball.parentCell.isFalling) return;
+            this.levelManager.SetWarningState();
 
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.gameObject.tag == "Ball")
         {
             Ball ball = other.gameObject.GetComponent<Ball>();
             if (ball.parentCell == null) return;
-            Debug.Log("Other Game Object " + other.gameObject.name);
-            this.levelManager.NormalState();
+            this.levelManager.SetNormalState();
 
         }
     }

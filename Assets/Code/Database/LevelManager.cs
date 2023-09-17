@@ -1,52 +1,91 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Database/Grid")]
 public class LevelManager : ScriptableObject
 {
-    private GameGrid currentGrid;
+    private GameGrid _currentGrid;
+    private bool _gameRunning = false;
+    public GameGrid CurrentGrid { get { if (_currentGrid == null) _currentGrid = GameObject.FindFirstObjectByType<GameGrid>(); return this._currentGrid; } }
 
-    public GameGrid CurrentGrid { get { if (currentGrid == null) currentGrid = GameObject.FindFirstObjectByType<GameGrid>(); return this.currentGrid; } }
+    public bool GameRunning { get { return _gameRunning; } }
+
     public UnityAction<Collider2D[]> OnBallCollision;
-    public UnityAction<GridCell[]> OnBallExplode;
+    public UnityAction<GridCell> OnBallExplode;
+    public UnityAction<Vector3, Color> OnBallDestroy;
+    public UnityAction<GridCell[]> OnConnectedBallsExplode;
     public UnityAction<GridCell> OnRemoveConnected;
     public UnityAction OnWarningState;
     public UnityAction OnNormalState;
+    public UnityAction<Level> onLevelChanged;
+    public UnityAction<Level> onLevelStarted;
+    public UnityAction<Level> onLevelEnded;
+    public UnityAction<float> OnLevelCount;
 
-    public int[] availableBallColorIndexes { get; private set; }
+
+
+    [SerializeField] Level[] levels;
 
     public void BallCollision()
     {
-        if (this.OnBallCollision != null) this.OnBallCollision(null);
+        this.OnBallCollision?.Invoke(null);
     }
-
-
-    public void BallExplode(List<GridCell> balls)
+    public void BallExplode(GridCell cell)
     {
-        if (this.OnBallExplode != null) this.OnBallExplode(balls.ToArray());
+        this.OnBallExplode?.Invoke(cell);
+    }
+    public void BallDestroy(Vector3 position, Color color)
+    {
+        this.OnBallDestroy?.Invoke(position, color);
+    }
+    public void ConnectedBallsExplode(List<GridCell> balls)
+    {
+        this.OnConnectedBallsExplode?.Invoke(balls.ToArray());
     }
 
     public void RemoveConnected(GridCell cell)
     {
-        if (this.OnRemoveConnected != null) this.OnRemoveConnected(cell);
+        this.OnRemoveConnected?.Invoke(cell);
     }
 
-    public void WarningState()
+    public void SetWarningState()
     {
-        this.OnWarningState();
+        this.OnWarningState?.Invoke();
 
     }
 
-    public void NormalState()
+    public void SetNormalState()
     {
-        if (this.OnNormalState != null) this.OnNormalState();
-
+        this.OnNormalState?.Invoke();
     }
-    public void SetAvailailableBallColors(int[] colors)
+
+    public void LoadLevel(int levelIndex)
     {
-        this.availableBallColorIndexes = colors;
+        this.onLevelChanged?.Invoke(this.levels[levelIndex]);
+    }
+
+    public void StartLevel(int levelIndex)
+    {
+        this.onLevelStarted?.Invoke(this.levels[levelIndex]);
+    }
+
+    public void SetLevelCountDown(float seconds)
+    {
+        this.OnLevelCount?.Invoke(seconds);
+    }
+
+
+    public void StartGame()
+    {
+        this._gameRunning = true;
+    }
+
+    public void StopGame()
+    {
+        this._gameRunning = false;
     }
 }

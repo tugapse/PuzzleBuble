@@ -14,7 +14,9 @@ public class Ball : MonoBehaviour
     public GridCell parentCell = null;
 
     public LevelManager levelManager;
-    public Color ExplosionColor;
+    public Color explosionColor;
+
+    public bool preventPop = false;
 
 
 
@@ -24,8 +26,9 @@ public class Ball : MonoBehaviour
 
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {
-            if (!this.PrepareBigidBody()) return;
+            if (!this.PrepareBigidBody() || this.levelManager.GameRunning == false) return;
 
+            if (preventPop) { preventPop = false; return; }
             GridCell cell = this.Snap();
             if (cell == null) return;
             this.trigger.enabled = true;
@@ -36,7 +39,7 @@ public class Ball : MonoBehaviour
     }
     private void CheckIsTopRow(GridCell cell, Collision2D other)
     {
-        if (levelManager.CurrentGrid.gameStarted)
+        if (levelManager.GameRunning)
         {
             cell.isTopRow = other.gameObject.tag == "Top";
         }

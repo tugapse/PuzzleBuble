@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GridCell
 {
@@ -12,6 +12,7 @@ public class GridCell
     public Vector3 gridPosition;
     public Ball ball;
     public bool isDirty;
+    public bool isFalling;
     public GameGrid gameGrid;
     public List<GridCell> connectedCells
     {
@@ -69,6 +70,7 @@ public class GridCell
 
     public void Fall(float gravityMultiply = 1f)
     {
+        this.isFalling = true;
         Rigidbody2D rb = this.ball.GetComponent<Rigidbody2D>();
         var colliders = this.ball.GetComponents<Collider2D>();
         if (colliders != null)
@@ -79,7 +81,7 @@ public class GridCell
             }
         }
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.gravityScale = gravityMultiply;
+        rb.gravityScale = Random.Range(5, 5 + gravityMultiply);
         this.SetBallOpacity();
         this.Clear(false);
     }
@@ -103,7 +105,7 @@ public class GridCell
         rb.bodyType = RigidbodyType2D.Dynamic;
 
         explosionPoint.Normalize();
-        Vector3 random = Vector3.left * UnityEngine.Random.Range(-5, +6);
+        Vector3 random = Vector3.left * Random.Range(-5, +6);
 
         if (explosionPoint == gridPosition)
         {

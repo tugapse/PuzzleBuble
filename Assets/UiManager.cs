@@ -9,16 +9,18 @@ public class UiManager : MonoBehaviour
     public int playerPoints = 0;
     public TextMeshProUGUI text;
     public LevelManager levelManager;
+    public PlayerManager playerManager;
 
     private void Start()
     {
-        this.levelManager.OnBallExplode += this.OnBallExplode;
+        this.playerManager.OnScorePointsChanged += this.OnScorePointsChanged;
         this.playerPoints = 0;
     }
 
-    private void OnBallExplode(GridCell[] arg0)
+    private void OnScorePointsChanged(int points)
     {
-        this.playerPoints += 10;
+        this.playerPoints += points;
         this.text.text = playerPoints.ToString();
     }
+
 }
