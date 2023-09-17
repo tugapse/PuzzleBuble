@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "Database/Player")]
-public class PlayerData : ScriptableObject
+public class PlayerManager : ScriptableObject
 {
     public float shootForce;
     public float RotationSpeed;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,22 +7,26 @@ using UnityEngine;
 
 public class StartTimer : MonoBehaviour
 {
-    public GameGrid gameGrid;
+
     public TextMeshProUGUI text;
 
-
-    // Update is called once per frame
-    void Update()
+    [SerializeField] LevelManager levelManager;
+    private void Start()
     {
-        if (!gameGrid.gameStarted)
-        {
-            int value = (int)gameGrid.gameStartDelay;
-            this.text.text = value == 0 ? "Vai :)" : value.ToString();
-        }
-        else
-        {
-            text.enabled = false;
-        }
+        this.levelManager.OnLevelCount += this.onLevelCount;
+        this.levelManager.onLevelStarted += this.onLevelStarted;
     }
+
+    private void onLevelStarted(Level arg0)
+    {
+        text.enabled = false;
+    }
+
+    private void onLevelCount(float remainingTime)
+    {
+        int value = Mathf.FloorToInt(remainingTime);
+        this.text.text = value == 0 ? "Começar" : value.ToString();
+    }
+
 
 }

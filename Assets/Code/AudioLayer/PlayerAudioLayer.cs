@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class PlayerAudioLayer : MonoBehaviour
 {
 
-    public PlayerData playerData;
+    public PlayerManager playerData;
     public LevelManager levelManager;
     public float minTurnAngleToPlaySound = 2;
 

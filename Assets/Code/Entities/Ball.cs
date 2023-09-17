@@ -24,7 +24,7 @@ public class Ball : MonoBehaviour
 
         if (other.gameObject.tag == "Ball" || other.gameObject.tag == "Top")
         {
-            if (!this.PrepareBigidBody()) return;
+            if (!this.PrepareBigidBody() || this.levelManager.GameStarted == false) return;
 
             GridCell cell = this.Snap();
             if (cell == null) return;
@@ -36,7 +36,7 @@ public class Ball : MonoBehaviour
     }
     private void CheckIsTopRow(GridCell cell, Collision2D other)
     {
-        if (levelManager.CurrentGrid.gameStarted)
+        if (levelManager.GameStarted)
         {
             cell.isTopRow = other.gameObject.tag == "Top";
         }

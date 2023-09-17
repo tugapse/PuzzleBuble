@@ -55,8 +55,10 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.0f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Code\Database\ParticleSystemManager.cs" />
     <Compile Include="Assets\Code\Entities\Ball.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\TiltWindow.cs" />
+    <Compile Include="Assets\Code\Entities\LevelParticleSystem.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\DragPanel.cs" />
     <Compile Include="Assets\UiManager.cs" />
     <Compile Include="Assets\Code\BallSpawnner.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="Assets\External\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
     <Compile Include="Assets\Code\Database\Level.cs" />
     <Compile Include="Assets\Code\GameGrid\GameGrid.cs" />
+    <Compile Include="Assets\Code\Database\BallspawnerManager.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\TestU.cs" />
     <Compile Include="Assets\ShakeCamera.cs" />

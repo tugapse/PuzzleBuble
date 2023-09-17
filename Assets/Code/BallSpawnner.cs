@@ -5,22 +5,28 @@ using UnityEngine;
 public class BallSpawner : MonoBehaviour
 {
 
-    public LevelManager levelManager;
-    public Transform nextBallTranform;
-    public BallSpawnerAnimations animations;
+    [SerializeField] Transform nextBallTranform;
+    [SerializeField] BallSpawnerAnimations animations;
     private GameObject currentBall;
     private GameObject nextBall;
-    public PlayerControler playerControler;
-
-    public PlayerData playerData;
-    public Level level;
+    [SerializeField] PlayerControler playerControler;
+    [SerializeField] PlayerManager playerManager;
+    [SerializeField] LevelManager levelManager;
+    private Level level;
 
     Color GizmoColor = Color.cyan;
 
     void Start()
     {
-        this.playerData.OnShoot += this.OnPlayerShoot;
+        this.playerManager.OnShoot += this.OnPlayerShoot;
+        this.levelManager.onLevelChanged += this.OnLevelChanged;
 
+    }
+
+    private void OnLevelChanged(Level newLevel)
+    {
+        this.level = newLevel;
+        this.Spawn();
     }
 
     private void OnPlayerShoot(Vector3 direction)
@@ -28,7 +34,7 @@ public class BallSpawner : MonoBehaviour
         var ballObject = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
         ballObject.GetComponent<Ball>().levelManager = this.levelManager;
         Rigidbody2D rb = ballObject.GetComponent<Rigidbody2D>();
-        rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * this.playerManager.shootForce, ForceMode2D.Impulse);
         this.Spawn();
 
     }
@@ -58,7 +64,7 @@ public class BallSpawner : MonoBehaviour
         var ball = Instantiate(this.currentBall, this.transform.position, Quaternion.identity);
         ball.GetComponent<Ball>().levelManager = this.levelManager;
         Rigidbody2D rb = ball.GetComponent<Rigidbody2D>();
-        rb.AddForce(direction * this.playerData.shootForce, ForceMode2D.Impulse);
+        rb.AddForce(direction * this.playerManager.shootForce, ForceMode2D.Impulse);
 
     }
 

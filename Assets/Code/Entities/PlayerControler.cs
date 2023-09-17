@@ -11,18 +11,18 @@ public class PlayerControler : MonoBehaviour
 
     public BallSpawner spawnner;
     public bool canShoot { get; set; } = false;
-    public PlayerData playerData;
+    public PlayerManager playerManager;
+    public LevelManager levelManager;
 
 
 
     void Start()
     {
-        this.spawnner.Spawn();
     }
 
     void Update()
     {
-        if (!gamegrid.gameStarted) return;
+        if (!levelManager.GameStarted) return;
         this.CheckHandleRotation();
         this.handleJump();
     }
@@ -33,7 +33,7 @@ public class PlayerControler : MonoBehaviour
             if (this.canShoot)
             {
                 canShoot = false;
-                playerData.Shoot(transform.up);
+                playerManager.Shoot(transform.up);
             }
         }
     }
@@ -41,14 +41,14 @@ public class PlayerControler : MonoBehaviour
     void CheckHandleRotation()
     {
         float rotation = Input.GetAxisRaw("Horizontal");
-        this.currentRotation += rotation * this.playerData.RotationSpeed * Time.deltaTime;
+        this.currentRotation += rotation * this.playerManager.RotationSpeed * Time.deltaTime;
         this.currentRotation = this.clampRotation(this.currentRotation);
         this.transform.rotation = Quaternion.Euler(0, 0, -this.currentRotation);
-        if (rotation != 0) playerData.Turn(-this.currentRotation);
+        if (rotation != 0) playerManager.Turn(-this.currentRotation);
     }
     float clampRotation(float rotaion)
     {
-        return Mathf.Max(-this.playerData.maxRotationAngle, Mathf.Min(this.playerData.maxRotationAngle, rotaion));
+        return Mathf.Max(-this.playerManager.maxRotationAngle, Mathf.Min(this.playerManager.maxRotationAngle, rotaion));
 
     }
 }

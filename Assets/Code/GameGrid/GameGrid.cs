@@ -14,20 +14,25 @@ public class GameGrid : MonoBehaviour
 
     public float gameStartDelay = 2;
 
-    public bool gameStarted;
 
-    public Vector3 Size = Vector3.one * 10;
+
+    [SerializeField] Vector2 Size = Vector2.one * 10;
+    [SerializeField] Transform spawnerPoint;
+    [SerializeField] Transform spawnerTopRowPoint;
+    [SerializeField] Transform gridContainer;
+    [SerializeField] BallSpawner ballspawner;
+
+    [Header("Managers")]
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] ParticleSystemManager particleSystemManager;
+
+
+    List<GridCell> gameCells = new List<GridCell>();
     private float cellSize = 1f;
-    public List<GridCell> gameCells = new List<GridCell>();
-    public Transform spawnerPoint;
-    public Transform spawnerTopRowPoint;
-    public Transform gridContainer;
-    public BallSpawner ballspawner;
-    public ParticleSystem explotionParticles;
-    public LevelManager levelManager;
+    bool needFloodFiil;
+    bool needClean;
 
 
-    int frameDelay = 300;
 
 
     [Header("Debug")]
@@ -35,11 +40,15 @@ public class GameGrid : MonoBehaviour
     public bool drawCells = true;
     public Color gridColor;
     public Color cellColor = Color.black;
-    private bool needFloodFiil;
-    private bool needClean;
+
+    private void Awake()
+    {
+        this.levelManager.StopGame();
+    }
 
     void Start()
     {
+        this.levelManager.LoadLevel(0);
         this.ComputeGrid(true);
         this.levelManager.OnRemoveConnected += this.RemoveConnected;
     }
@@ -58,12 +67,21 @@ public class GameGrid : MonoBehaviour
     bool CanUpdate()
     {
         gameStartDelay -= Time.fixedDeltaTime;
+
         if (gameStartDelay < 0)
         {
-            this.gameStarted = true;
+            this.levelManager.StartGame();
             gameStartDelay = 0;
+            StartCoroutine(this.StartLevel());
         }
-        return gameStarted;
+        this.levelManager.SetLevelCountDown(gameStartDelay);
+        return this.levelManager.GameStarted;
+    }
+    private IEnumerator StartLevel()
+    {
+
+        yield return new WaitForSeconds(1);
+        this.levelManager.StartLevel(0);
     }
 
     private void FloodCheck()
@@ -193,7 +211,7 @@ public class GameGrid : MonoBehaviour
     public GridCell GetGridPosition(Vector3 worldPosition)
     {
         GridCell result = null;
-        float smallDist = 5;
+        float smallDist = 500;
         for (int i = 0; i < this.gameCells.Count; i++)
         {
             GridCell c = this.gameCells[i];
@@ -209,33 +227,31 @@ public class GameGrid : MonoBehaviour
 
     public void RemoveConnected(GridCell currentCell)
     {
-        if (!gameStarted) return;
+        if (!this.levelManager.GameStarted) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
-        if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(connectedcells));
+        if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(currentCell, connectedcells));
 
 
     }
-    IEnumerator ExplodePartcles(List<GridCell> connectedcells)
+    IEnumerator ExplodePartcles(GridCell currentCell, List<GridCell> connectedcells)
     {
+        connectedcells.Sort((a, b) => Mathf.Abs(Vector3.Distance(currentCell.gridPosition, a.gridPosition)) > Mathf.Abs(Vector3.Distance(currentCell.gridPosition, b.gridPosition)) ? 1 : -1);
         foreach (var cell in connectedcells)
         {
             EmmitExplosionParticles(cell);
             this.levelManager.BallExplode(connectedcells);
-            cell.Clear();
             yield return new WaitForSeconds(0.05f);
+            cell.Clear();
 
         }
         this.needFloodFiil = true;
     }
 
+
     private void EmmitExplosionParticles(GridCell currentCell)
     {
-        ParticleSystem.MainModule settings = this.explotionParticles.main;
-
-        settings.startColor = new ParticleSystem.MinMaxGradient(currentCell.ball.ExplosionColor);
-        this.explotionParticles.transform.position = currentCell.gridPosition;
-        this.explotionParticles.Emit(20);
+        this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.ExplosionColor, 15);
     }
 
     private void OnDrawGizmos()
