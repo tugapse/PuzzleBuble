@@ -12,6 +12,7 @@ public class PlayerManager : ScriptableObject
 
     public UnityAction<Vector3> OnShoot;
     public UnityAction<float> OnTurn;
+    public UnityAction<int> OnScorePointsChanged;
 
     public void Shoot(Vector3 direction)
     {
@@ -21,6 +22,11 @@ public class PlayerManager : ScriptableObject
     public void Turn(float angle)
     {
         if (this.OnShoot != null) this.OnTurn(angle);
+    }
+
+    public void AddScorePoints(int points)
+    {
+        this.OnScorePointsChanged?.Invoke(points);
     }
 
 }

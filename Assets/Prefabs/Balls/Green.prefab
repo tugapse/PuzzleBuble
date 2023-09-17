@@ -140,7 +140,8 @@ MonoBehaviour:
   conections: []
   sameColorConections: []
   levelManager: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
-  ExplosionColor: {r: 0.15884654, g: 0.9150943, b: 0.20852701, a: 0.69803923}
+  explosionColor: {r: 0.2627451, g: 0.86274517, b: 0.30980393, a: 1}
+  preventPop: 0
 --- !u!50 &-3441900996437292610
 Rigidbody2D:
   serializedVersion: 4

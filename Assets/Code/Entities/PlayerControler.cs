@@ -22,7 +22,7 @@ public class PlayerControler : MonoBehaviour
 
     void Update()
     {
-        if (!levelManager.GameStarted) return;
+        if (!levelManager.GameRunning) return;
         this.CheckHandleRotation();
         this.handleJump();
     }

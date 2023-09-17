@@ -17,6 +17,7 @@ public class PlayerAudioLayer : MonoBehaviour
     public AudioSource shootAudio;
     public AudioSource turn;
     public AudioSource explodeBuble;
+    public AudioSource destroyAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,10 @@ public class PlayerAudioLayer : MonoBehaviour
         playerData.OnShoot += this.OnShoot;
         playerData.OnTurn += this.OnTurn;
         levelManager.OnBallExplode += this.onBallExplode;
+        levelManager.OnBallDestroy += this.onBallDestroy;
     }
+
+
 
     private float lastTurnedAngle = 0;
     private void OnTurn(float angle)
@@ -37,14 +41,20 @@ public class PlayerAudioLayer : MonoBehaviour
         }
     }
 
-    private void onBallExplode(GridCell[] cells)
+    private void onBallExplode(GridCell cell)
     {
-        if (this.explodeBuble != null) this.explodeBuble.Play();
+        this.explodeBuble?.Play();
     }
+    private void onBallDestroy(Vector3 pos, Color color)
+    {
+        this.destroyAudio?.Play();
+    }
+
+
 
     private void OnShoot(Vector3 arg0)
     {
-        if (this.shootAudio != null) this.shootAudio.Play();
+        this.shootAudio?.Play();
 
     }
 

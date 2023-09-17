@@ -5,18 +5,18 @@ using System.ComponentModel;
 using System.Linq;
 using Unity.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 
 public class GameGrid : MonoBehaviour
 {
 
-
-    public float gameStartDelay = 2;
-
-
-
+    [SerializeField] float gameStartDelay = 2;
     [SerializeField] Vector2 Size = Vector2.one * 10;
+
+
+    [Header("Spawners")]
     [SerializeField] Transform spawnerPoint;
     [SerializeField] Transform spawnerTopRowPoint;
     [SerializeField] Transform gridContainer;
@@ -24,11 +24,12 @@ public class GameGrid : MonoBehaviour
 
     [Header("Managers")]
     [SerializeField] LevelManager levelManager;
+    [SerializeField] PlayerManager playerManager;
     [SerializeField] ParticleSystemManager particleSystemManager;
 
 
-    List<GridCell> gameCells = new List<GridCell>();
-    private float cellSize = 1f;
+    [SerializeField] List<GridCell> gameCells = new List<GridCell>();
+    float cellSize = 1f;
     bool needFloodFiil;
     bool needClean;
 
@@ -75,7 +76,7 @@ public class GameGrid : MonoBehaviour
             StartCoroutine(this.StartLevel());
         }
         this.levelManager.SetLevelCountDown(gameStartDelay);
-        return this.levelManager.GameStarted;
+        return this.levelManager.GameRunning;
     }
     private IEnumerator StartLevel()
     {
@@ -136,7 +137,7 @@ public class GameGrid : MonoBehaviour
     void FloodFill(List<GridCell> connected, List<Vector3> visited)
     {
         if (visited == null) visited = new List<Vector3>();
-        foreach (var cell in connected)
+        foreach (var cell in connected.Where(cell => cell != null))
         {
             if (visited.Contains(cell.gridPosition) || cell.isEmpty || !cell.isDirty) continue;
             cell.isDirty = false;
@@ -205,7 +206,16 @@ public class GameGrid : MonoBehaviour
         cell.ball.transform.parent = this.transform;
         cell.ball.trigger.enabled = true;
         cell.isTopRow = topRowRect.Contains(cell.gridPosition);
+        foreach (Collider2D col in cell.ball.GetComponents<Collider2D>())
+        {
+            col.enabled = col.isTrigger;
+        }
         cell.ball.Snap();
+        foreach (Collider2D col in cell.ball.GetComponents<Collider2D>())
+        {
+            cell.ball.preventPop = true;
+            col.enabled = true;
+        }
     }
 
     public GridCell GetGridPosition(Vector3 worldPosition)
@@ -227,7 +237,7 @@ public class GameGrid : MonoBehaviour
 
     public void RemoveConnected(GridCell currentCell)
     {
-        if (!this.levelManager.GameStarted) return;
+        if (!this.levelManager.GameRunning) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
         if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(currentCell, connectedcells));
@@ -237,10 +247,11 @@ public class GameGrid : MonoBehaviour
     IEnumerator ExplodePartcles(GridCell currentCell, List<GridCell> connectedcells)
     {
         connectedcells.Sort((a, b) => Mathf.Abs(Vector3.Distance(currentCell.gridPosition, a.gridPosition)) > Mathf.Abs(Vector3.Distance(currentCell.gridPosition, b.gridPosition)) ? 1 : -1);
+        this.levelManager.ConnectedBallsExplode(connectedcells);
         foreach (var cell in connectedcells)
         {
             EmmitExplosionParticles(cell);
-            this.levelManager.BallExplode(connectedcells);
+            this.levelManager.BallExplode(cell);
             yield return new WaitForSeconds(0.05f);
             cell.Clear();
 
@@ -251,7 +262,7 @@ public class GameGrid : MonoBehaviour
 
     private void EmmitExplosionParticles(GridCell currentCell)
     {
-        this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.ExplosionColor, 15);
+        this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.explosionColor, 15);
     }
 
     private void OnDrawGizmos()
@@ -297,6 +308,44 @@ public class GameGrid : MonoBehaviour
         }
 
     }
+    public void ResetCells()
+    {
+        levelManager.StopGame();
+        if (gameCells != null)
+        {
 
+            foreach (GridCell cell in gameCells)
+            {
+                cell.Clear(true);
+            }
+            gameCells.Clear();
+        }
+        this.ComputeGrid(true);
+
+
+    }
 
 }
+
+
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(GameGrid))]
+public class GameGridEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        GameGrid gridObject = (GameGrid)target;
+        DrawDefaultInspector();
+
+        if (GUILayout.Button("Generate Balls"))
+        {
+            gridObject.ResetCells();
+        }
+
+
+
+    }
+
+}
+#endif

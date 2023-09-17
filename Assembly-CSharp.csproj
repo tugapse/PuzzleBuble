@@ -70,6 +70,7 @@
     <Compile Include="Assets\External\Unity UI Samples\Scripts\ActiveStateToggler.cs" />
     <Compile Include="Assets\Code\Database\BallData.cs" />
     <Compile Include="Assets\Code\Helpers\Gizmos.cs" />
+    <Compile Include="Assets\UiPointsText.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\ApplicationManager.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Code\AudioLayer\BackgroundMusic.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\External\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\TestU.cs" />
     <Compile Include="Assets\ShakeCamera.cs" />
+    <Compile Include="Assets\Code\Entities\PointUiText.cs" />
     <Compile Include="Assets\Code\Entities\PlayerControler.cs" />
     <Compile Include="Assets\External\Unity UI Samples\Scripts\PanelManager.cs" />
     <Compile Include="Assets\Code\Database\PlayerData.cs" />

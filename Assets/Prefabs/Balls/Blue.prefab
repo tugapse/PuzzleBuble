@@ -202,4 +202,5 @@ MonoBehaviour:
   conections: []
   sameColorConections: []
   levelManager: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
-  ExplosionColor: {r: 0.25490198, g: 0.6745098, b: 0.8431373, a: 0.69803923}
+  explosionColor: {r: 0.49411768, g: 0.8078432, b: 0.9686275, a: 1}
+  preventPop: 0

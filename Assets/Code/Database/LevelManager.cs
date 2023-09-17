@@ -9,13 +9,15 @@ using UnityEngine.Events;
 public class LevelManager : ScriptableObject
 {
     private GameGrid _currentGrid;
-    private bool _gameStarted = false;
+    private bool _gameRunning = false;
     public GameGrid CurrentGrid { get { if (_currentGrid == null) _currentGrid = GameObject.FindFirstObjectByType<GameGrid>(); return this._currentGrid; } }
 
-    public bool GameStarted { get { return _gameStarted; } }
+    public bool GameRunning { get { return _gameRunning; } }
 
     public UnityAction<Collider2D[]> OnBallCollision;
-    public UnityAction<GridCell[]> OnBallExplode;
+    public UnityAction<GridCell> OnBallExplode;
+    public UnityAction<Vector3, Color> OnBallDestroy;
+    public UnityAction<GridCell[]> OnConnectedBallsExplode;
     public UnityAction<GridCell> OnRemoveConnected;
     public UnityAction OnWarningState;
     public UnityAction OnNormalState;
@@ -27,19 +29,22 @@ public class LevelManager : ScriptableObject
 
 
     [SerializeField] Level[] levels;
-    public LevelManager()
-    {
-        this._gameStarted = false;
-    }
 
     public void BallCollision()
     {
         this.OnBallCollision?.Invoke(null);
     }
-
-    public void BallExplode(List<GridCell> balls)
+    public void BallExplode(GridCell cell)
     {
-        this.OnBallExplode?.Invoke(balls.ToArray());
+        this.OnBallExplode?.Invoke(cell);
+    }
+    public void BallDestroy(Vector3 position, Color color)
+    {
+        this.OnBallDestroy?.Invoke(position, color);
+    }
+    public void ConnectedBallsExplode(List<GridCell> balls)
+    {
+        this.OnConnectedBallsExplode?.Invoke(balls.ToArray());
     }
 
     public void RemoveConnected(GridCell cell)
@@ -76,11 +81,11 @@ public class LevelManager : ScriptableObject
 
     public void StartGame()
     {
-        this._gameStarted = true;
+        this._gameRunning = true;
     }
 
     public void StopGame()
     {
-        this._gameStarted = false;
+        this._gameRunning = false;
     }
 }

@@ -12,8 +12,8 @@ public class ParticleSystemManager : ScriptableObject
     {
         OnBallExplosion?.Invoke(position, color, count);
     }
-    public void BallBottomExplosion(Vector3 position, Color color, int count = 10)
+    public void BallDestroyed(Vector3 position, Color color, int count = 10)
     {
-        OnBallExplosion?.Invoke(position, color, count);
+        OnBallBottomExplosion?.Invoke(position, color, count);
     }
 }
