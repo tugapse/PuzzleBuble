@@ -25,7 +25,7 @@ public class StartTimer : MonoBehaviour
     private void onLevelCount(float remainingTime)
     {
         int value = Mathf.FloorToInt(remainingTime);
-        this.text.text = value == 0 ? "Começar" : value.ToString();
+        this.text.text = value == 0 ? "Joga" : value.ToString();
     }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class BallSpawner : MonoBehaviour
@@ -7,31 +8,29 @@ public class BallSpawner : MonoBehaviour
 
     [SerializeField] Transform nextBallTranform;
     [SerializeField] BallSpawnerAnimations animations;
-    private GameObject currentBall;
-    private GameObject nextBall;
     [SerializeField] PlayerControler playerControler;
+
+    [Header("Managers")]
     [SerializeField] PlayerManager playerManager;
     [SerializeField] LevelManager levelManager;
-    [SerializeField] BallspawnerManager ballspawnerManager;
-    private Level level;
+
+
+    private GameObject currentBall;
+    private GameObject nextBall;
+    private Level currentLevel;
 
     Color GizmoColor = Color.cyan;
 
-    void Start()
+    void Awake()
     {
         this.playerManager.OnShoot += this.OnPlayerShoot;
         this.levelManager.onLevelChanged += this.OnLevelChanged;
-        // this.ballspawnerManager.onSpawnBall += OnBallSpanw;
     }
 
-    private void OnBallSpanw(Vector3 worldPos, GameObject toSpanw)
-    {
-
-    }
 
     private void OnLevelChanged(Level newLevel)
     {
-        this.level = newLevel;
+        this.currentLevel = newLevel;
         this.Spawn();
     }
 
@@ -51,12 +50,13 @@ public class BallSpawner : MonoBehaviour
 
         if (this.currentBall == null)
         {
-            this.currentBall = this.level.availableBalls[Random.Range(0, this.level.availableBalls.Length)];
+            this.currentBall = this.currentLevel.availableBalls[Random.Range(0, this.currentLevel.availableBalls.Length)];
         }
-        this.nextBall = this.level.availableBalls[Random.Range(0, this.level.availableBalls.Length)];
+        this.nextBall = this.currentLevel.availableBalls[Random.Range(0, this.currentLevel.availableBalls.Length)];
         this.animations.StartAnimation();
     }
 
+    // called by Ball Spanwer animations script
     private void SwapSprites()
     {
         SpriteRenderer currentSpriteRenderer = this.GetComponent<SpriteRenderer>();
@@ -80,12 +80,13 @@ public class BallSpawner : MonoBehaviour
         UnityEngine.Gizmos.DrawWireSphere(this.transform.position, 0.5f);
         UnityEngine.Gizmos.DrawWireSphere(this.nextBallTranform.position, 0.5f);
     }
+
     public GameObject InstanciateBall(Vector3 position)
     {
-        int ballsLength = this.level.availableBalls.Length;
-        var noisepos = (position + level.noiseOffset) * level.noiseScale;
-        float noiseValue = Mathf.PerlinNoise(noisepos.x, noisepos.y) * ballsLength * level.noiseRepetition;
-        int index = Mathf.FloorToInt(noiseValue) % level.availableBalls.Length;
-        return Instantiate(this.level.availableBalls[index], position, Quaternion.identity);
+        int ballsLength = this.currentLevel.availableBalls.Length;
+        var noisepos = (position + currentLevel.noiseOffset) * currentLevel.noiseScale;
+        float noiseValue = Mathf.PerlinNoise(noisepos.x, noisepos.y) * ballsLength * currentLevel.noiseRepetition;
+        int index = Mathf.FloorToInt(noiseValue) % currentLevel.availableBalls.Length;
+        return Instantiate(this.currentLevel.availableBalls[index], position, Quaternion.identity);
     }
 }

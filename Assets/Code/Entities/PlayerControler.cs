@@ -1,28 +1,25 @@
 
+using System;
 using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
 
-    public GameGrid gamegrid;
-    public Transform arrow;
-    public Transform mira;
+    [SerializeField] GameGrid gamegrid;
+    [SerializeField] Transform arrow;
+    [SerializeField] Transform mira;
+
+    [SerializeField] BallSpawner spawnner;
+    [SerializeField] PlayerManager playerManager;
+    [SerializeField] LevelManager levelManager;
+
+    public bool canShoot { get; set; } = false;
     float currentRotation = 0;
 
-    public BallSpawner spawnner;
-    public bool canShoot { get; set; } = false;
-    public PlayerManager playerManager;
-    public LevelManager levelManager;
-
-
-
-    void Start()
-    {
-    }
 
     void Update()
     {
-        if (!levelManager.GameRunning) return;
+        if (!levelManager.LevelRunning) return;
         this.CheckHandleRotation();
         this.handleJump();
     }

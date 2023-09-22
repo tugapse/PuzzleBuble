@@ -15,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - VFX builder
   - 
   - 
   - 
@@ -44,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Balls
+    uniqueID: 1897284165
+    locked: 0
+  - name: VFX Builder
+    uniqueID: 1884618169
     locked: 0

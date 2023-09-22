@@ -12,7 +12,7 @@ public class LevelManager : ScriptableObject
     private bool _gameRunning = false;
     public GameGrid CurrentGrid { get { if (_currentGrid == null) _currentGrid = GameObject.FindFirstObjectByType<GameGrid>(); return this._currentGrid; } }
 
-    public bool GameRunning { get { return _gameRunning; } }
+    public bool LevelRunning { get { return _gameRunning; } }
 
     public UnityAction<Collider2D[]> OnBallCollision;
     public UnityAction<GridCell> OnBallExplode;
@@ -21,6 +21,7 @@ public class LevelManager : ScriptableObject
     public UnityAction<GridCell> OnRemoveConnected;
     public UnityAction OnWarningState;
     public UnityAction OnNormalState;
+    public UnityAction OnGameOver;
     public UnityAction<Level> onLevelChanged;
     public UnityAction<Level> onLevelStarted;
     public UnityAction<Level> onLevelEnded;
@@ -87,5 +88,10 @@ public class LevelManager : ScriptableObject
     public void StopGame()
     {
         this._gameRunning = false;
+    }
+
+    public void GameOver()
+    {
+        this.OnGameOver?.Invoke();
     }
 }

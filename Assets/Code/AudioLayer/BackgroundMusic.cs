@@ -5,23 +5,29 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public LevelManager levelManager;
+
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] LevelManager levelManager;
 
 
-    public float normalPitch = 1f;
-    public float warningPitch = 1.4f;
+    [SerializeField] float normalPitch = 1f;
+    [SerializeField] float warningPitch = 1.4f;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         this.levelManager.OnNormalState += this.OnNormalState;
         this.levelManager.OnWarningState += this.OnWarningState;
+        this.levelManager.OnGameOver += this.onGameOver;
+    }
+
+    private void onGameOver()
+    {
+        this.audioSource.Stop();
     }
 
     private void OnWarningState()
     {
-        Debug.Log("Warning State");
         this.audioSource.pitch = this.warningPitch;
     }
 

@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using Unity.Collections;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,8 +9,9 @@ using UnityEngine;
 public class GameGrid : MonoBehaviour
 {
 
+    [SerializeField] int currentLevelIndex;
     [SerializeField] float gameStartDelay = 2;
-    [SerializeField] Vector2 Size = Vector2.one * 10;
+    [SerializeField] Vector2Int Size = Vector2Int.one;
 
 
     [Header("Spawners")]
@@ -45,24 +43,28 @@ public class GameGrid : MonoBehaviour
     private void Awake()
     {
         this.levelManager.StopGame();
+        this.levelManager.OnRemoveConnected += this.RemoveConnected;
+        this.levelManager.OnGameOver += this.OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        this.levelManager.StopGame();
     }
 
     void Start()
     {
-        this.levelManager.LoadLevel(0);
+        this.playerManager.PlayerScore = 0;
+        this.levelManager.LoadLevel(this.currentLevelIndex);
         this.ComputeGrid(true);
-        this.levelManager.OnRemoveConnected += this.RemoveConnected;
     }
 
 
     void FixedUpdate()
     {
-
         if (!CanUpdate()) return;
         this.FloodCheck();
         this.DestroyAfterFlood();
-
-
     }
 
     bool CanUpdate()
@@ -76,18 +78,16 @@ public class GameGrid : MonoBehaviour
             StartCoroutine(this.StartLevel());
         }
         this.levelManager.SetLevelCountDown(gameStartDelay);
-        return this.levelManager.GameRunning;
+        return this.levelManager.LevelRunning;
     }
     private IEnumerator StartLevel()
     {
-
         yield return new WaitForSeconds(1);
-        this.levelManager.StartLevel(0);
+        this.levelManager.StartLevel(this.currentLevelIndex);
     }
 
     private void FloodCheck()
     {
-
         if (!this.needFloodFiil) return;
         var visitedFlood = new List<Vector3>();
         this.ClearGridState();
@@ -96,7 +96,6 @@ public class GameGrid : MonoBehaviour
 
     private void ClearGridState()
     {
-
         foreach (var cell in this.gameCells)
         {
             if (cell.isFull)
@@ -111,6 +110,7 @@ public class GameGrid : MonoBehaviour
         if (currentCell == null) return new List<GridCell>();
         if (visited == null) visited = new List<int>();
         if (connetedCells == null) connetedCells = new List<GridCell>();
+
         // TODO: add cells that are inside game area Rect
         for (int i = 0; i < gameCells.Count; i++)
         {
@@ -129,7 +129,7 @@ public class GameGrid : MonoBehaviour
         return connetedCells;
     }
 
-    public List<GridCell> GetTopRowCells()
+    List<GridCell> GetTopRowCells()
     {
         return this.gameCells.Where(cell => cell.isTopRow).ToList<GridCell>();
     }
@@ -147,7 +147,7 @@ public class GameGrid : MonoBehaviour
         this.needFloodFiil = false;
         this.needClean = true;
     }
-    private void DestroyAfterFlood()
+    void DestroyAfterFlood()
     {
         if (!needClean) return;
         foreach (var cell in this.gameCells)
@@ -158,7 +158,7 @@ public class GameGrid : MonoBehaviour
         this.needClean = false;
     }
 
-    private void ComputeGrid(bool instantiateBall)
+    void ComputeGrid(bool instantiateBall)
     {
         float increment = 0f;
 
@@ -176,7 +176,7 @@ public class GameGrid : MonoBehaviour
 
     }
 
-    private void CheckSpawnPointAndAddBall(GridCell cell)
+    void CheckSpawnPointAndAddBall(GridCell cell)
     {
 
         float minX = spawnerPoint.position.x - spawnerPoint.localScale.x / 2;
@@ -194,7 +194,7 @@ public class GameGrid : MonoBehaviour
 
     }
 
-    private void InstantiateBall(GridCell cell)
+    void InstantiateBall(GridCell cell)
     {
         float tminX = spawnerTopRowPoint.position.x - spawnerTopRowPoint.localScale.x / 2;
         float tminY = spawnerTopRowPoint.position.y - spawnerTopRowPoint.localScale.y / 2;
@@ -237,7 +237,7 @@ public class GameGrid : MonoBehaviour
 
     public void RemoveConnected(GridCell currentCell)
     {
-        if (!this.levelManager.GameRunning) return;
+        if (!this.levelManager.LevelRunning) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
         if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(currentCell, connectedcells));
@@ -260,18 +260,18 @@ public class GameGrid : MonoBehaviour
     }
 
 
-    private void EmmitExplosionParticles(GridCell currentCell)
+    void EmmitExplosionParticles(GridCell currentCell)
     {
         this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.explosionColor, 15);
     }
 
-    private void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         if (drawGrid) DrawGrid();
         if (drawCells) DrawCells();
     }
 
-    private void DrawGrid()
+    void DrawGrid()
     {
         float radius = 0.5f;
         UnityEngine.Gizmos.color = gridColor;
@@ -282,7 +282,6 @@ public class GameGrid : MonoBehaviour
 
             for (float x = 0; x <= Size.x; x += cellSize)
             {
-
                 UnityEngine.Gizmos.DrawWireSphere(this.ComputeGridPosition(increment, x, y), radius);
             }
             increment += 0.1f;
@@ -290,7 +289,7 @@ public class GameGrid : MonoBehaviour
         }
     }
 
-    private Vector3 ComputeGridPosition(float increment, float x, float y)
+    Vector3 ComputeGridPosition(float increment, float x, float y)
     {
         bool isOdd = MathF.Abs(y) % 2 != 0;
         float xOffset = isOdd ? 0.5f : 0;
@@ -298,7 +297,7 @@ public class GameGrid : MonoBehaviour
         return this.transform.position + new Vector3(x + xOffset, 1 * (y - radius - increment), 0);
     }
 
-    private void DrawCells()
+    void DrawCells()
     {
         UnityEngine.Gizmos.color = this.cellColor;
         for (int i = 0; i < gameCells.Count; i++)

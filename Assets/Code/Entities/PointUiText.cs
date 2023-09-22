@@ -6,25 +6,27 @@ public class PointUiText : MonoBehaviour
 {
     [SerializeField] float minSpeed = 2;
     [SerializeField] float maxSpeed = 4;
+    [SerializeField] float minDistance = 120;
     [SerializeField] PlayerManager playerManager;
 
     public float delay = 0.8f;
 
-
-
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if (delay > 0)
-        {
-            delay -= Time.deltaTime;
-            return;
-        }
-        this.transform.position = Vector3.Lerp(this.transform.position, this.transform.parent.position, UnityEngine.Random.Range(minSpeed, maxSpeed) * Time.deltaTime);
-        if (Vector3.Distance(transform.position, transform.parent.position) < 120)
-        {
-            this.playerManager.AddScorePoints(10);
-            Destroy(this.gameObject);
-        }
+        StartCoroutine(this.GoToTarget());
     }
+    IEnumerator GoToTarget()
+    {
+
+        yield return new WaitForSeconds(delay);
+
+        while (Vector3.Distance(transform.position, transform.parent.position) > minDistance)
+        {
+            this.transform.position = Vector3.Lerp(this.transform.position, this.transform.parent.position, UnityEngine.Random.Range(minSpeed, maxSpeed) * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        this.playerManager.AddScorePoints(10);
+        Destroy(this.gameObject);
+    }
+
 }

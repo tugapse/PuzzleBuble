@@ -38,9 +38,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Origin: 2.95
-    - _Spread: 0.78
+    - _Origin: -0.15
+    - _Spread: 0.63
     m_Colors:
     - _Bottom_Color: {r: 0.98225087, g: 0.48514998, b: 0.09084173, a: 0}
-    - _Top_Color: {r: 12.84447, g: 0.2648808, b: 0, a: 1}
+    - _Top_Color: {r: 0.29837197, g: 3.7208734, b: 2.6542523, a: 1}
   m_BuildTextureStacks: []

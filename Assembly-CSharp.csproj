@@ -50,80 +50,80 @@
     <UnityVersion>2022.3.0f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\Fabio\.vscode\extensions\visualstudiotoolsforunity.vstuc-0.9.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\Fabio\.vscode\extensions\visualstudiotoolsforunity.vstuc-0.9.1\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.0f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.0f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ShowSliderValue.cs" />
     <Compile Include="Assets\Code\Database\ParticleSystemManager.cs" />
+    <Compile Include="Assets\_External\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\DragMe.cs" />
+    <Compile Include="Assets\_External\Free 2D Cartoon Parallax Background\Demo\Script\ParallaxBackground_0.cs" />
     <Compile Include="Assets\Code\Entities\Ball.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\Code\Entities\LevelParticleSystem.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\DragPanel.cs" />
-    <Compile Include="Assets\UiManager.cs" />
     <Compile Include="Assets\Code\BallSpawnner.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\DropMe.cs" />
+    <Compile Include="Assets\Code\Entities\Ui\UiPointsText.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />
-    <Compile Include="Assets\External\Free 2D Cartoon Parallax Background\Demo\Script\ParallaxBackground_0.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\DragPanel.cs" />
     <Compile Include="Assets\Code\UI\StartTimer.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ChangeColor.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ActiveStateToggler.cs" />
+    <Compile Include="Assets\Code\Entities\GameOverTrigger.cs" />
+    <Compile Include="Assets\Code\Entities\Ui\UiManager.cs" />
     <Compile Include="Assets\Code\Database\BallData.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\PanelManager.cs" />
     <Compile Include="Assets\Code\Helpers\Gizmos.cs" />
-    <Compile Include="Assets\UiPointsText.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ApplicationManager.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ShowSliderValue.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\TiltWindow.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ScrollDetailTexture.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\Code\AudioLayer\BackgroundMusic.cs" />
-    <Compile Include="Assets\External\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
     <Compile Include="Assets\Code\Database\Level.cs" />
     <Compile Include="Assets\Code\GameGrid\GameGrid.cs" />
-    <Compile Include="Assets\Code\Database\BallspawnerManager.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ResizePanel.cs" />
-    <Compile Include="Assets\TestU.cs" />
-    <Compile Include="Assets\ShakeCamera.cs" />
     <Compile Include="Assets\Code\Entities\PointUiText.cs" />
     <Compile Include="Assets\Code\Entities\PlayerControler.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\PanelManager.cs" />
-    <Compile Include="Assets\Code\Database\PlayerData.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\DragMe.cs" />
+    <Compile Include="Assets\Code\Database\PlayerManager.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ChangeColor.cs" />
     <Compile Include="Assets\Code\Database\LevelManager.cs" />
     <Compile Include="Assets\Code\GameGrid\Spawner.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\DropMe.cs" />
     <Compile Include="Assets\Code\AudioLayer\PlayerAudioLayer.cs" />
-    <Compile Include="Assets\External\Unity UI Samples\Scripts\ScrollDetailTexture.cs" />
     <Compile Include="Assets\Code\Animations\BallSpawnerAnimations.cs" />
     <Compile Include="Assets\Code\Entities\Warning Stage.cs" />
+    <Compile Include="Assets\_External\Unity UI Samples\Scripts\ActiveStateToggler.cs" />
+    <Compile Include="Assets\Code\UI\UI_GameOver.cs" />
+    <Compile Include="Assets\Code\Entities\Ui\UIBallSpawner.cs" />
     <Compile Include="Assets\Actions\GameEvent.cs" />
     <Compile Include="Assets\Code\GameGrid\GridCell.cs" />
+    <Compile Include="Assets\Code\Entities\ScrollGameView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMPro.cginc" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
-    <None Include="Assets\External\Unity UI Samples\Textures and Sprites\SF UI\Background\LICENSE.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-    <None Include="Assets\Shaders\BallguideShader.shader" />
-    <None Include="Assets\External\Unity UI Samples\Materials\UI-Default-No-Alpha.shader" />
-    <None Include="Assets\External\CasualGameBGM05\ReadMe.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
-    <None Include="Assets\External\FREE CASUAL MUSIC PACK\WELCOME_CGMUSIC.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\External\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
-    <None Include="Assets\External\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-    <None Include="Assets\External\Unity UI Samples\Fonts\Jupiter\LICENSE.txt" />
-    <None Include="Assets\External\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
-    <None Include="Assets\External\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\External\TextMesh Pro\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\_External\Unity UI Samples\Textures and Sprites\SF UI\Background\LICENSE.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\_External\Unity UI Samples\Materials\UI-Default-No-Alpha.shader" />
+    <None Include="Assets\_External\CasualGameBGM05\ReadMe.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\_External\FREE CASUAL MUSIC PACK\WELCOME_CGMUSIC.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\_External\Unity UI Samples\Fonts\Jupiter\LICENSE.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\_External\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -750,6 +750,9 @@
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
@@ -773,6 +776,9 @@
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
