@@ -1,9 +1,8 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Database/Grid")]
 public class LevelManager : ScriptableObject
@@ -26,6 +25,7 @@ public class LevelManager : ScriptableObject
     public UnityAction<Level> onLevelStarted;
     public UnityAction<Level> onLevelEnded;
     public UnityAction<float> OnLevelCount;
+    public UnityAction<float> OnStartSinglePlayerGame;
 
 
 
@@ -93,5 +93,10 @@ public class LevelManager : ScriptableObject
     public void GameOver()
     {
         this.OnGameOver?.Invoke();
+    }
+
+    internal void StartSimglePlayerGame()
+    {
+        SceneManager.LoadScene("SinglePlay");
     }
 }

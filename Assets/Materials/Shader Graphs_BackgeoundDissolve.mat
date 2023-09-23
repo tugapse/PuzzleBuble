@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3367632844637662307
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GradientBackground
-  m_Shader: {fileID: -6465566751694194690, guid: de3ac21bc69149d4eb16e80bfa9a3833, type: 3}
+  m_Name: Shader Graphs_BackgeoundDissolve
+  m_Shader: {fileID: -6465566751694194690, guid: 3ebead011fa030147875b1d496e565e8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -36,7 +23,11 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _ParallaxMapping_fa19b468e0ce49bdbfbcfca205b9dbc7_Heightmap_1_Texture2D:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -54,9 +45,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Origin: 0.2
-    - _Spread: 0.92
+    - _Dissolve: 0.625
+    - _Origin: 0.844
+    - _Smothness: 0.2
+    - _SmothnessMax: 0.844
+    - _SmothnessMin: 0.576
+    - _Spread: 0.347
     m_Colors:
-    - _Bottom_Color: {r: 0, g: 0.28635132, b: 0.3584906, a: 1}
-    - _Top_Color: {r: 0.9150943, g: 0.85466355, b: 0.22014059, a: 1}
+    - _Animate: {r: 0.06, g: 0.28, b: 0, a: 0}
+    - _FromColor: {r: 0.8542923, g: 0.59284556, b: 0.18133566, a: 0}
+    - _ToColor: {r: 0.92452836, g: 0.4926445, b: 0.15263438, a: 0}
   m_BuildTextureStacks: []
+--- !u!114 &1706717795740887440
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7

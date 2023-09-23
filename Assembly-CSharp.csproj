@@ -67,6 +67,7 @@
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\DropMe.cs" />
     <Compile Include="Assets\Code\Entities\Ui\UiPointsText.cs" />
     <Compile Include="Assets\Code\DestroyScript.cs" />
+    <Compile Include="Assets\Code\UI\MainMenu.cs" />
     <Compile Include="Assets\Code\Pointer.cs" />
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\DragPanel.cs" />
     <Compile Include="Assets\Code\UI\StartTimer.cs" />
