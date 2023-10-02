@@ -45,16 +45,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Dissolve: 0.625
-    - _Origin: 0.844
+    - _Dissolve: 0.548
+    - _Origin: 0.598
     - _Smothness: 0.2
-    - _SmothnessMax: 0.844
-    - _SmothnessMin: 0.576
-    - _Spread: 0.347
+    - _SmothnessMax: 0.781
+    - _SmothnessMin: 0.46
+    - _Spread: 0.51
     m_Colors:
-    - _Animate: {r: 0.06, g: 0.28, b: 0, a: 0}
+    - _Animate: {r: 0, g: 0, b: 0, a: 0}
     - _FromColor: {r: 0.8542923, g: 0.59284556, b: 0.18133566, a: 0}
-    - _ToColor: {r: 0.92452836, g: 0.4926445, b: 0.15263438, a: 0}
+    - _ToColor: {r: 0, g: 0.100815535, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1706717795740887440
 MonoBehaviour:

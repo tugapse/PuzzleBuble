@@ -64,9 +64,10 @@ public class LevelManager : ScriptableObject
         this.OnNormalState?.Invoke();
     }
 
-    public void LoadLevel(int levelIndex)
+    public Level LoadLevel(int levelIndex)
     {
         this.onLevelChanged?.Invoke(this.levels[levelIndex]);
+        return this.levels[levelIndex];
     }
 
     public void StartLevel(int levelIndex)

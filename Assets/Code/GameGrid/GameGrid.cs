@@ -10,7 +10,6 @@ public class GameGrid : MonoBehaviour
 {
 
     [SerializeField] int currentLevelIndex;
-    [SerializeField] float gameStartDelay = 2;
     [SerializeField] Vector2Int Size = Vector2Int.one;
 
 
@@ -27,6 +26,7 @@ public class GameGrid : MonoBehaviour
 
 
     [SerializeField] List<GridCell> gameCells = new List<GridCell>();
+    float gameStartDelay = 2;
     float cellSize = 1f;
     bool needFloodFiil;
     bool needClean;
@@ -54,8 +54,8 @@ public class GameGrid : MonoBehaviour
 
     void Start()
     {
-        this.playerManager.PlayerScore = 0;
-        this.levelManager.LoadLevel(this.currentLevelIndex);
+        Level currentLevel = this.levelManager.LoadLevel(this.currentLevelIndex);
+        this.gameStartDelay = currentLevel.StartLevelDelay;
         this.ComputeGrid(true);
     }
 
@@ -258,8 +258,6 @@ public class GameGrid : MonoBehaviour
         }
         this.needFloodFiil = true;
     }
-
-
     void EmmitExplosionParticles(GridCell currentCell)
     {
         this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.explosionColor, 15);

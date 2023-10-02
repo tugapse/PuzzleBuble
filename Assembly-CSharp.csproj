@@ -78,14 +78,15 @@
     <Compile Include="Assets\Code\Helpers\Gizmos.cs" />
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\TiltWindow.cs" />
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\ScrollDetailTexture.cs" />
+    <Compile Include="Assets\Code\Entities\PlayerPointer.cs" />
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\ResizePanel.cs" />
     <Compile Include="Assets\Code\AudioLayer\BackgroundMusic.cs" />
-    <Compile Include="Assets\Code\Database\Level.cs" />
     <Compile Include="Assets\Code\GameGrid\GameGrid.cs" />
     <Compile Include="Assets\Code\Entities\PointUiText.cs" />
     <Compile Include="Assets\Code\Entities\PlayerControler.cs" />
     <Compile Include="Assets\Code\Database\PlayerManager.cs" />
     <Compile Include="Assets\_External\Unity UI Samples\Scripts\ChangeColor.cs" />
+    <Compile Include="Assets\Code\Database\LevelConfig.cs" />
     <Compile Include="Assets\Code\Database\LevelManager.cs" />
     <Compile Include="Assets\Code\GameGrid\Spawner.cs" />
     <Compile Include="Assets\Code\AudioLayer\PlayerAudioLayer.cs" />

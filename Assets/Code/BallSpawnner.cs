@@ -83,8 +83,9 @@ public class BallSpawner : MonoBehaviour
 
     public GameObject InstanciateBall(Vector3 position)
     {
+        Vector3 noiseOffset = new Vector3(currentLevel.noiseOffsetX, currentLevel.noiseOffsetY);
         int ballsLength = this.currentLevel.availableBalls.Length;
-        var noisepos = (position + currentLevel.noiseOffset) * currentLevel.noiseScale;
+        var noisepos = (position + noiseOffset) * currentLevel.noiseScale;
         float noiseValue = Mathf.PerlinNoise(noisepos.x, noisepos.y) * ballsLength * currentLevel.noiseRepetition;
         int index = Mathf.FloorToInt(noiseValue) % currentLevel.availableBalls.Length;
         return Instantiate(this.currentLevel.availableBalls[index], position, Quaternion.identity);

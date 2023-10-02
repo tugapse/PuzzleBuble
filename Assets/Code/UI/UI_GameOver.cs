@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UI_GameOver : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class UI_GameOver : MonoBehaviour
     {
         this.playerScoreText.text = this.playerManager.PlayerScore.ToString();
         this.viewObject.SetActive(true);
+    }
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+        SceneManager.UnloadSceneAsync("SinglePlay");
+
     }
 
 }

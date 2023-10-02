@@ -6,10 +6,8 @@ public class PlayerControler : MonoBehaviour
 {
 
     [SerializeField] GameGrid gamegrid;
-    [SerializeField] Transform arrow;
-    [SerializeField] Transform mira;
-
     [SerializeField] BallSpawner spawnner;
+    [SerializeField] Transform pointerTransform;
     [SerializeField] PlayerManager playerManager;
     [SerializeField] LevelManager levelManager;
 

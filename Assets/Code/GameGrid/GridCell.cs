@@ -39,7 +39,7 @@ public class GridCell
     public void Clear(bool destroy = true)
     {
         this.ClearConnections();
-        if (destroy && ball?.gameObject) GameObject.Destroy(ball.gameObject);
+        if (destroy && ball?.gameObject) ball.Explode();
         this.ball = null;
         this.isTopRow = false;
         this.isDirty = false;

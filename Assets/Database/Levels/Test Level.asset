@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Test Level
   m_EditorClassIdentifier: 
   StartLevelDelay: 2
-  noiseOffset: {x: 1, y: 1, z: 0}
-  noiseScale: 0.4
-  noiseRepetition: 4
+  noiseOffsetX: 0
+  noiseOffsetY: 0
+  noiseScale: 1.2
+  noiseRepetition: 20
   availableBalls:
   - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
   - {fileID: 9028555844156648720, guid: 4985951c101914b49bb44fbb2edc56f6, type: 3}
