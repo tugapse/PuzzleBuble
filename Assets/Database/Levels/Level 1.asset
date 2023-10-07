@@ -16,8 +16,9 @@ MonoBehaviour:
   levelSpeed: 0
   noiseOffsetX: 0
   noiseOffsetY: 0
-  noiseScale: 0.2
-  noiseRepetition: 3
+  noiseScale: 0.73
+  noiseRepetition: 20
   availableBalls:
   - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
   - {fileID: 9028555844156648720, guid: 4985951c101914b49bb44fbb2edc56f6, type: 3}
+  - {fileID: 9028555844156648720, guid: 87161c1dfd81ac84b84c98b2c41de74f, type: 3}

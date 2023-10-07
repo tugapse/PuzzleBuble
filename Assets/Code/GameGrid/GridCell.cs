@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,7 +21,7 @@ public class GridCell
         {
             List<GridCell> result = new List<GridCell>();
             if (this.isEmpty) return result;
-            foreach (Ball ball in this.ball.conections)
+            foreach (Ball ball in this.ball.conections.Where(ball => ball != null))
             {
                 var cell = gameGrid.GetGridPosition(ball.transform.position);
                 result.Add(cell);

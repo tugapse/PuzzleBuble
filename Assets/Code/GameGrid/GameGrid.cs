@@ -18,6 +18,7 @@ public class GameGrid : MonoBehaviour
     [SerializeField] Transform spawnerTopRowPoint;
     [SerializeField] Transform gridContainer;
     [SerializeField] BallSpawner ballspawner;
+    [SerializeField] Transform gameViewBounds;
 
     [Header("Managers")]
     [SerializeField] LevelManager levelManager;
@@ -30,18 +31,18 @@ public class GameGrid : MonoBehaviour
     float cellSize = 1f;
     bool needFloodFiil;
     bool needClean;
+    Vector2 scrollView = Vector2.zero;
+    float scrollViewSpeed = 0.09f;
+    Level currentLevel;
 
 
 
-
-    [Header("Debug")]
-    public bool drawGrid = true;
-    public bool drawCells = true;
-    public Color gridColor;
-    public Color cellColor = Color.black;
+    public GridCell[] VisibleCells { get { return this.gameCells.Where(cell => this.IsVisibleCell(cell)).ToArray(); } }
+    public GridCell[] ActiveCells { get { return this.gameCells.Where(cell => cell.isFull).ToArray(); } }
 
     private void Awake()
     {
+
         this.levelManager.StopGame();
         this.levelManager.OnRemoveConnected += this.RemoveConnected;
         this.levelManager.OnGameOver += this.OnGameOver;
@@ -54,17 +55,42 @@ public class GameGrid : MonoBehaviour
 
     void Start()
     {
-        Level currentLevel = this.levelManager.LoadLevel(this.currentLevelIndex);
-        this.gameStartDelay = currentLevel.StartLevelDelay;
-        this.ComputeGrid(true);
-    }
 
+        this.currentLevel = this.levelManager.LoadLevel(this.currentLevelIndex);
+        this.gameStartDelay = currentLevel.StartLevelDelay;
+        this.CreateGridCells(true);
+    }
+    private void CreateGridCells(bool instantiateBall)
+    {
+        float increment = 0f;
+
+        for (int y = 0; y <= Size.y; y++)
+        {
+            for (int x = 0; x <= Size.x; x++)
+            {
+                GridCell cell = new GridCell() { gridPosition = this.ComputeGridPosition(increment, x, y), gameGrid = this };
+
+                if (instantiateBall)
+                    this.CheckSpawnPointAndAddBall(cell);
+            }
+            increment += 0.1f;
+        }
+
+    }
 
     void FixedUpdate()
     {
         if (!CanUpdate()) return;
+        var VisibleCellsCount = this.VisibleCells.Length;
+        Debug.Log("Active Cells : " + this.ActiveCells.Length + " Visible cells : " + VisibleCellsCount);
         this.FloodCheck();
         this.DestroyAfterFlood();
+
+        if (VisibleCellsCount < this.currentLevel.minViewBallsBeforeScroll)
+        {
+            this.scrollView -= Vector2.down * scrollViewSpeed;
+            this.levelManager.ScrollView(this.scrollView);
+        }
     }
 
     bool CanUpdate()
@@ -77,7 +103,10 @@ public class GameGrid : MonoBehaviour
             gameStartDelay = 0;
             StartCoroutine(this.StartLevel());
         }
-        this.levelManager.SetLevelCountDown(gameStartDelay);
+        else if (!this.levelManager.LevelRunning)
+        {
+            this.levelManager.SetLevelCountDown(gameStartDelay);
+        }
         return this.levelManager.LevelRunning;
     }
     private IEnumerator StartLevel()
@@ -91,7 +120,9 @@ public class GameGrid : MonoBehaviour
         if (!this.needFloodFiil) return;
         var visitedFlood = new List<Vector3>();
         this.ClearGridState();
+
         this.FloodFill(this.GetTopRowCells(), visitedFlood);
+
     }
 
     private void ClearGridState()
@@ -115,7 +146,8 @@ public class GameGrid : MonoBehaviour
         for (int i = 0; i < gameCells.Count; i++)
         {
             GridCell otherCell = this.gameCells[i];
-            if (otherCell == currentCell) continue;
+            if (otherCell == currentCell || IsVisibleCell(otherCell) == false) continue;
+
             if (!visited.Contains(i) && currentCell.isRange(otherCell.gridPosition, 1.1f))
             {
                 visited.Add(i);
@@ -127,6 +159,18 @@ public class GameGrid : MonoBehaviour
             }
         }
         return connetedCells;
+    }
+
+    bool IsVisibleCell(GridCell cell)
+    {
+        if (cell.isEmpty) return false;
+        Rect viewRect = new Rect(
+            gameViewBounds.position.x - gameViewBounds.localScale.x / 2,
+            gameViewBounds.position.y - gameViewBounds.localScale.y / 2,
+            gameViewBounds.localScale.x,
+            gameViewBounds.localScale.y
+        );
+        return viewRect.Contains(cell.gridPosition);
     }
 
     List<GridCell> GetTopRowCells()
@@ -158,23 +202,7 @@ public class GameGrid : MonoBehaviour
         this.needClean = false;
     }
 
-    void ComputeGrid(bool instantiateBall)
-    {
-        float increment = 0f;
 
-        for (int y = 0; y <= Size.y; y++)
-        {
-            for (int x = 0; x <= Size.x; x++)
-            {
-                GridCell cell = new GridCell() { gridPosition = this.ComputeGridPosition(increment, x, y), gameGrid = this };
-
-                if (instantiateBall)
-                    this.CheckSpawnPointAndAddBall(cell);
-            }
-            increment += 0.1f;
-        }
-
-    }
 
     void CheckSpawnPointAndAddBall(GridCell cell)
     {
@@ -240,11 +268,11 @@ public class GameGrid : MonoBehaviour
         if (!this.levelManager.LevelRunning) return;
         var visited = new List<int>();
         var connectedcells = this.GetConnectedCells(currentCell, visited);
-        if (connectedcells.Count >= 3) StartCoroutine(this.ExplodePartcles(currentCell, connectedcells));
+        if (connectedcells.Count >= 3) StartCoroutine(this.ExplodeBalls(currentCell, connectedcells));
 
 
     }
-    IEnumerator ExplodePartcles(GridCell currentCell, List<GridCell> connectedcells)
+    IEnumerator ExplodeBalls(GridCell currentCell, List<GridCell> connectedcells)
     {
         connectedcells.Sort((a, b) => Mathf.Abs(Vector3.Distance(currentCell.gridPosition, a.gridPosition)) > Mathf.Abs(Vector3.Distance(currentCell.gridPosition, b.gridPosition)) ? 1 : -1);
         this.levelManager.ConnectedBallsExplode(connectedcells);
@@ -252,8 +280,8 @@ public class GameGrid : MonoBehaviour
         {
             EmmitExplosionParticles(cell);
             this.levelManager.BallExplode(cell);
+            cell.Fall();
             yield return new WaitForSeconds(0.05f);
-            cell.Clear();
 
         }
         this.needFloodFiil = true;
@@ -261,30 +289,6 @@ public class GameGrid : MonoBehaviour
     void EmmitExplosionParticles(GridCell currentCell)
     {
         this.particleSystemManager.BallExplosion(currentCell.gridPosition, currentCell.ball.explosionColor, 15);
-    }
-
-    void OnDrawGizmos()
-    {
-        if (drawGrid) DrawGrid();
-        if (drawCells) DrawCells();
-    }
-
-    void DrawGrid()
-    {
-        float radius = 0.5f;
-        UnityEngine.Gizmos.color = gridColor;
-        float increment = 0f;
-        for (float y = 0; y <= Size.y; y += cellSize)
-        {
-            UnityEngine.Gizmos.color = gridColor;
-
-            for (float x = 0; x <= Size.x; x += cellSize)
-            {
-                UnityEngine.Gizmos.DrawWireSphere(this.ComputeGridPosition(increment, x, y), radius);
-            }
-            increment += 0.1f;
-
-        }
     }
 
     Vector3 ComputeGridPosition(float increment, float x, float y)
@@ -295,16 +299,6 @@ public class GameGrid : MonoBehaviour
         return this.transform.position + new Vector3(x + xOffset, 1 * (y - radius - increment), 0);
     }
 
-    void DrawCells()
-    {
-        UnityEngine.Gizmos.color = this.cellColor;
-        for (int i = 0; i < gameCells.Count; i++)
-        {
-            GridCell c = this.gameCells[i];
-            UnityEngine.Gizmos.DrawWireSphere(c.gridPosition, 0.5f);
-        }
-
-    }
     public void ResetCells()
     {
         levelManager.StopGame();
@@ -317,7 +311,7 @@ public class GameGrid : MonoBehaviour
             }
             gameCells.Clear();
         }
-        this.ComputeGrid(true);
+        this.CreateGridCells(true);
 
 
     }

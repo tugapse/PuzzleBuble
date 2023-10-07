@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4472879660780899353}
   - component: {fileID: 3019587473696405249}
-  - component: {fileID: 1332582584538454756}
-  - component: {fileID: -6574808217437150887}
-  - component: {fileID: -3441900996437292610}
-  - component: {fileID: 7755433960334754679}
+  - component: {fileID: -8068547179064105493}
+  - component: {fileID: 1935927032934217248}
+  - component: {fileID: 1580904898847823982}
+  - component: {fileID: 5475471976955938798}
   m_Layer: 0
-  m_Name: Green
+  m_Name: Red_Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6fdaaeb13b822c249b9a21d6bbaab810, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e09e6e35937dbf44699bf62c181abf57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -88,7 +88,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &1332582584538454756
+--- !u!58 &-8068547179064105493
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &-6574808217437150887
+--- !u!114 &1935927032934217248
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,14 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39157fcf2d3747b42b60715a43eb7fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: 2
-  trigger: {fileID: 7755433960334754679}
+  color: 4
+  trigger: {fileID: 5475471976955938798}
   conections: []
   sameColorConections: []
   levelManager: {fileID: 11400000, guid: 405bf3e867862454d884f814cf55a930, type: 2}
-  explosionColor: {r: 0.2627451, g: 0.86274517, b: 0.30980393, a: 1}
+  explosionColor: {r: 0.77647066, g: 0.64705884, b: 0.73333335, a: 1}
   preventPop: 0
---- !u!50 &-3441900996437292610
+--- !u!50 &1580904898847823982
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!58 &7755433960334754679
+--- !u!58 &5475471976955938798
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

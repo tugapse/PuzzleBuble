@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20fc265868335643b6cd69ba6c10c8e, type: 3}
-  m_Name: LevelManager
+  m_Script: {fileID: 11500000, guid: 006fca5ccf383db4a8132018ec961769, type: 3}
+  m_Name: Master
   m_EditorClassIdentifier: 
-  levels:
-  - {fileID: 11400000, guid: 8b224c8e87c77b14b93cf9c9572b1fec, type: 2}
-  - {fileID: 11400000, guid: f90a96322e2edc340ac16e9e3fcfc323, type: 2}
+  BGMVolume: 1
+  SFXVolume: 1

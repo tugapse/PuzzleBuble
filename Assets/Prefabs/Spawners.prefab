@@ -387,6 +387,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: ff336574b418a6049a793a9f36ad8513, type: 2}
     - target: {fileID: 2159486128063051706, guid: 0b9f0979f7c97e2479513f933033a0df, type: 3}
+      propertyPath: currentLevelIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2159486128063051706, guid: 0b9f0979f7c97e2479513f933033a0df, type: 3}
       propertyPath: spawnerTopRowPoint
       value: 
       objectReference: {fileID: 1552988499034931360}

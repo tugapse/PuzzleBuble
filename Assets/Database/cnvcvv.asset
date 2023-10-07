@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c1f853840b96e04dbd2b5772c59dae4, type: 3}
-  m_Name: Test Level
+  m_Name: cnvcvv
   m_EditorClassIdentifier: 
-  StartLevelDelay: 2
-  levelSpeed: 0.2
-  noiseOffsetX: 0
-  noiseOffsetY: 0
-  noiseScale: 0.2
-  noiseRepetition: 3
+  StartLevelDelay: 1
+  levelSpeed: 0
+  noiseOffsetX: 7
+  noiseOffsetY: 4
+  noiseScale: 0.47
+  noiseRepetition: 10
   availableBalls:
   - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
-  - {fileID: 9028555844156648720, guid: 20fae95e2aec0a54ea509f83fd600902, type: 3}
-  - {fileID: 9028555844156648720, guid: 87161c1dfd81ac84b84c98b2c41de74f, type: 3}
+  - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}
+  - {fileID: 9028555844156648720, guid: d587fba60ed14e24eb5b9b7ef46de630, type: 3}

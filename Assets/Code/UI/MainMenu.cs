@@ -29,8 +29,7 @@ public class MainMenu : MonoBehaviour
     {
         this.animator.SetTrigger("FadeOut");
         yield return new WaitForSeconds(1f);
-        this.levelManager.StartSimglePlayerGame();
-        SceneManager.UnloadSceneAsync("MainMenu");
+        this.levelManager.StartSinglePlayerGame();
     }
     public void EndGame()
     {

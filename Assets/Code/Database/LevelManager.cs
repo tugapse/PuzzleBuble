@@ -26,6 +26,7 @@ public class LevelManager : ScriptableObject
     public UnityAction<Level> onLevelEnded;
     public UnityAction<float> OnLevelCount;
     public UnityAction<float> OnStartSinglePlayerGame;
+    public UnityAction<Vector2> OnScrollView;
 
 
 
@@ -96,7 +97,12 @@ public class LevelManager : ScriptableObject
         this.OnGameOver?.Invoke();
     }
 
-    internal void StartSimglePlayerGame()
+    public void ScrollView(Vector2 scroll)
+    {
+        this.OnScrollView?.Invoke(scroll);
+    }
+
+    public void StartSinglePlayerGame()
     {
         SceneManager.LoadScene("SinglePlay");
     }
