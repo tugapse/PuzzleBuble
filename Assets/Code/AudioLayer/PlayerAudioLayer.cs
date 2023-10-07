@@ -19,6 +19,8 @@ public class PlayerAudioLayer : MonoBehaviour
     public AudioSource explodeBuble;
     public AudioSource destroyAudio;
 
+    [SerializeField] AudioSettings audioSettings;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +28,17 @@ public class PlayerAudioLayer : MonoBehaviour
         playerData.OnTurn += this.OnTurn;
         levelManager.OnBallExplode += this.onBallExplode;
         levelManager.OnBallDestroy += this.onBallDestroy;
+
+        this.LevelSounds();
     }
 
-
+    private void LevelSounds()
+    {
+        this.shootAudio.volume = audioSettings.SFXVolume;
+        this.turn.volume = audioSettings.SFXVolume;
+        this.explodeBuble.volume = audioSettings.SFXVolume;
+        this.destroyAudio.volume = audioSettings.SFXVolume;
+    }
 
     private float lastTurnedAngle = 0;
     private void OnTurn(float angle)

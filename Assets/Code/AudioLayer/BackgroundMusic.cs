@@ -9,16 +9,22 @@ public class BackgroundMusic : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] LevelManager levelManager;
 
+    [SerializeField] AudioSettings audioSettings;
+
 
     [SerializeField] float normalPitch = 1f;
     [SerializeField] float warningPitch = 1.4f;
 
-    // Start is called before the first frame update
     void Awake()
     {
         this.levelManager.OnNormalState += this.OnNormalState;
         this.levelManager.OnWarningState += this.OnWarningState;
         this.levelManager.OnGameOver += this.onGameOver;
+    }
+
+    void Start()
+    {
+        this.audioSource.volume = audioSettings.BGMVolume;
     }
 
     private void onGameOver()
